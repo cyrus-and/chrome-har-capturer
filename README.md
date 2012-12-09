@@ -30,6 +30,41 @@ c.on('error', function() {
 will load the supplied URLs serially generating a cumulative HAR file, just like
 the Record button in the [Network Panel of Chrome Developer Tools][4].
 
+API
+---
+
+### load(urls, [options])
+
+Connects to a remote instance of Google Chrome using the
+[Remote Debugging Protocol][3] and loads a list of URLs serially. Returns an
+instance of the `Client` class.
+
+`urls` is an array of URLs.
+
+`options` is an object with the following optional properties:
+
+- `host`: [Remote Debugging Protocol][3] host. Defaults to `localhost`.
+- `port`: [Remote Debugging Protocol][3] port. Defaults to `9222`.
+- `chooseTab`: Callback used to determine which remote tab attach to. Takes the
+  JSON array returned by `http://host:port/json` containing the tab list and
+  must return the numeric index of a tab. Defaults to a function that always
+  returns the first one (`function (tabs) { return 0; }`).
+
+### Class: Client
+
+#### Event: 'end'
+
+    function (har) {}
+
+Emitted when every given URL has been loaded. `har` is the cumulative HAR object
+in JSON format.
+
+#### Event: 'error'
+
+    function () {}
+
+Emitted when `http://host:port/json` can't be reached.
+
 Resources
 ---------
 
