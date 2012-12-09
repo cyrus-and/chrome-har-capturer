@@ -30,6 +30,8 @@ c.on('error', function() {
 will load the supplied URLs serially generating a cumulative HAR file, just like
 the Record button in the [Network Panel of Chrome Developer Tools][4].
 
+The full version is available in the `examples` folder.
+
 API
 ---
 
