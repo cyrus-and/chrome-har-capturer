@@ -39,7 +39,7 @@ Connects to a remote instance of Google Chrome using the
 [Remote Debugging Protocol][3] and loads a list of URLs serially. Returns an
 instance of the `Client` class.
 
-`urls` is an array of URLs.
+`urls` is either an array or a single URL.
 
 `options` is an object with the following optional properties:
 
