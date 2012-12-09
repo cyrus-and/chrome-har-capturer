@@ -1,0 +1,14 @@
+{
+    "name": "chrome-har-capturer",
+    "author": "Andrea Cardaci <cyrus.and@gmail.com>",
+    "description": "Capture HAR files from a remote Chrome instance",
+    "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
+    },
+    "dependencies": {
+        "ws": "0.4.x"
+    }
+}
