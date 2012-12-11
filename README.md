@@ -52,6 +52,12 @@ instance of the `Client` class.
   must return the numeric index of a tab. Defaults to a function that always
   returns the first one (`function (tabs) { return 0; }`).
 
+### setVerbose([verbose])
+
+Enable or disable verbose prints for debugging purposes.
+
+`verbose`: Verbosity flag. Defaults to `true`.
+
 ### Class: Client
 
 #### Event: 'end'
