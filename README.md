@@ -8,10 +8,14 @@ Install
 
     npm install git://github.com/cyrus-and/chrome-har-capturer.git
 
-Example
--------
+Usage
+-----
 
-Start Google Chrome with the option `--remote-debugging-port=9222` then:
+Start Google Chrome with the option `--remote-debugging-port=9222`.
+
+The following snippet loads an array of URLs serially and generate a cumulative
+HAR file, just like the Record button in the
+[Network Panel of Chrome Developer Tools][4].
 
 ```javascript
 var fs = require('fs');
@@ -27,10 +31,23 @@ c.on('error', function() {
 });
 ```
 
-will load the supplied URLs serially generating a cumulative HAR file, just like
-the Record button in the [Network Panel of Chrome Developer Tools][4].
+### Use the bundled utility
 
-The full version is available in the `examples` folder.
+    chrome-har-capturer output.har url...
+
+This module comes with a utility that can be used to generate a cumulative HAR
+file from a list of URLs.
+
+Install globally with:
+
+    npm install -g git://github.com/cyrus-and/chrome-har-capturer.git
+
+Load the same URL list as the above example with:
+
+    chrome-har-capturer out.har \
+        https://github.com \
+        http://reddit.com \
+        http://www.reddit.com/help/faq
 
 API
 ---

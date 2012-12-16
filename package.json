@@ -8,6 +8,9 @@
         "type": "git",
         "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
     },
+    "bin": {
+        "chrome-har-capturer": "./bin/chrome-har-capturer"
+    },
     "dependencies": {
         "ws": "0.4.x"
     }
