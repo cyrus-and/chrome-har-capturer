@@ -6,7 +6,7 @@ Capture HAR files from a remote Chrome instance.
 Install
 -------
 
-    npm install git://github.com/cyrus-and/chrome-har-capturer.git
+    npm install chrome-har-capturer
 
 Usage
 -----
@@ -45,7 +45,7 @@ file from a list of URLs.
 
 Install globally with:
 
-    npm install -g git://github.com/cyrus-and/chrome-har-capturer.git
+    npm install -g chrome-har-capturer
 
 Load the same URL list as the above example with:
 
