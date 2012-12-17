@@ -11,6 +11,9 @@ if (process.argv.length < 4) {
     var urls = process.argv.splice(3);
     var c = chc.load(urls);
 
+    c.on('pageEnd', function(url) {
+        console.log('[ DONE ] ' + url);
+    });
     c.on('end', function(har) {
         fs.writeFileSync(output, JSON.stringify(har, null, 4));
     });
