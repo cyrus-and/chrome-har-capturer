@@ -12,6 +12,7 @@
         "chrome-har-capturer": "./bin/chrome-har-capturer"
     },
     "dependencies": {
-        "ws": "0.4.x"
+        "ws": "0.4.x",
+        "optimist": "0.3.x"
     }
 }

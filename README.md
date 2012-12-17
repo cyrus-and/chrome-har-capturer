@@ -33,7 +33,12 @@ c.on('error', function() {
 
 ### Use the bundled utility
 
-    chrome-har-capturer output.har url...
+    Usage: chrome-har-capturer [options] URL...
+
+    Options:
+      --host, -h    Remote Debugging Protocol host                [default: "localhost"]
+      --port, -p    Remote Debugging Protocol port                [default: 9222]
+      --output, -o  Dump generated HAR to file instead of stdout
 
 This module comes with a utility that can be used to generate a cumulative HAR
 file from a list of URLs.
@@ -44,7 +49,7 @@ Install globally with:
 
 Load the same URL list as the above example with:
 
-    chrome-har-capturer out.har \
+    chrome-har-capturer -o out.har \
         https://github.com \
         http://reddit.com \
         http://www.reddit.com/help/faq

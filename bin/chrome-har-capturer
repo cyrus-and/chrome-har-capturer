@@ -2,23 +2,49 @@
 
 var fs = require('fs');
 var chc = require('../');
+var argv = require('optimist')
+    .usage('Capture HAR files from a remote Chrome instance\n\n' +
+           'Usage: $0 [options] URL...')
+    .demand(1)
+    .options({
+        'host': {
+            'demand': false,
+            'alias': 'h',
+            'description': 'Remote Debugging Protocol host',
+            'default': 'localhost'
+        },
+        'port': {
+            'demand': false,
+            'alias': 'p',
+            'description': 'Remote Debugging Protocol port',
+            'default': 9222
+        },
+        'output': {
+            'demand': false,
+            'alias': 'o',
+            'description': 'Dump generated HAR to file instead of stdout'
+        }
+    })
+    .argv;
 
-if (process.argv.length < 4) {
-    console.log('usage:\n\tchrome-har-capturer output.har url...');
+var output = argv.output;
+var urls = argv._;
+var c = chc.load(urls, {'host': argv.host,
+                        'port': argv.port});
+
+c.on('pageEnd', function(url) {
+    console.error('[ DONE ] ' + url);
+});
+c.on('end', function(har) {
+    var prettyHar = JSON.stringify(har, null, 4);
+    if (argv.output) {
+        fs.writeFileSync(output, prettyHar);
+    } else {
+        console.log(prettyHar);
+    }
+});
+c.on('error', function() {
+    console.error('Unable to connect to Chrome on ' +
+                  argv.host + ':' + argv.port);
     process.exit(1);
-} else {
-    var output = process.argv[2];
-    var urls = process.argv.splice(3);
-    var c = chc.load(urls);
-
-    c.on('pageEnd', function(url) {
-        console.log('[ DONE ] ' + url);
-    });
-    c.on('end', function(har) {
-        fs.writeFileSync(output, JSON.stringify(har, null, 4));
-    });
-    c.on('error', function() {
-        console.error('Unable to connect to Chrome');
-        process.exit(1);
-    });
-}
+});
