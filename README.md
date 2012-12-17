@@ -77,6 +77,18 @@ Enable or disable verbose prints for debugging purposes.
 
 ### Class: Client
 
+#### Event: 'pageStart'
+
+    function (url) {}
+
+Emitted when Chrome is about to load `url`.
+
+#### Event: 'pageEnd
+
+    function (url) {}
+
+Emitted when Chrome has finished loading `url`.
+
 #### Event: 'end'
 
     function (har) {}
