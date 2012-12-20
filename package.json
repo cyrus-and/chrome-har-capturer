@@ -2,6 +2,7 @@
     "name": "chrome-har-capturer",
     "author": "Andrea Cardaci <cyrus.and@gmail.com>",
     "description": "Capture HAR files from a remote Chrome instance",
+    "keywords": ["chrome", "har", "remote", "debug"],
     "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
     "version": "0.0.1",
     "repository": {
