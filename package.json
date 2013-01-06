@@ -14,6 +14,7 @@
     },
     "dependencies": {
         "ws": "0.4.x",
-        "optimist": "0.3.x"
+        "optimist": "0.3.x",
+        "colors": "0.6.x"
     }
 }

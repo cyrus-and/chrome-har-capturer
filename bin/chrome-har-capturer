@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var chc = require('../');
+var colors = require('colors');
 var argv = require('optimist')
     .usage('Capture HAR files from a remote Chrome instance\n\n' +
            'Usage: $0 [options] URL...')
@@ -33,10 +34,10 @@ var c = chc.load(urls, {'host': argv.host,
                         'port': argv.port});
 
 c.on('pageEnd', function(url) {
-    console.error('[ DONE ] ' + url);
+    console.error('DONE'.green + ' ' + url);
 });
 c.on('pageError', function(url) {
-    console.error('[ FAIL ] ' + url);
+    console.error('FAIL'.red + ' ' + url);
 });
 c.on('end', function(har) {
     var prettyHar = JSON.stringify(har, null, 4);
