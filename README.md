@@ -94,6 +94,13 @@ Emitted when Chrome is about to load `url`.
 
 Emitted when Chrome has finished loading `url`.
 
+#### Event: 'pageError'
+
+    function (url) {}
+
+Emitted when Chrome has failed loading `url`. Failed URLs will not appear in the
+cumulative HAR object.
+
 #### Event: 'end'
 
     function (har) {}

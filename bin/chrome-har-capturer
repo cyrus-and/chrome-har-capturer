@@ -35,6 +35,9 @@ var c = chc.load(urls, {'host': argv.host,
 c.on('pageEnd', function(url) {
     console.error('[ DONE ] ' + url);
 });
+c.on('pageError', function(url) {
+    console.error('[ FAIL ] ' + url);
+});
 c.on('end', function(har) {
     var prettyHar = JSON.stringify(har, null, 4);
     if (argv.output) {
