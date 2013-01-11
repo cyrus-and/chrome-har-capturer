@@ -88,7 +88,7 @@ Enable or disable verbose prints for debugging purposes.
 
 Emitted when Chrome is about to load `url`.
 
-#### Event: 'pageEnd
+#### Event: 'pageEnd'
 
     function (url) {}
 
