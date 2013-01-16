@@ -24,6 +24,11 @@ var argv = require('optimist')
             'demand': false,
             'alias': 'o',
             'description': 'Dump generated HAR to file instead of stdout'
+        },
+        'verbose': {
+            'demand': false,
+            'alias': 'v',
+            'description': 'Enable verbose output'
         }
     })
     .argv;
@@ -32,6 +37,10 @@ var output = argv.output;
 var urls = argv._;
 var c = chc.load(urls, {'host': argv.host,
                         'port': argv.port});
+
+if (argv.verbose) {
+    chc.setVerbose();
+}
 
 c.on('pageEnd', function(url) {
     console.error('DONE'.green + ' ' + url);
