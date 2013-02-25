@@ -11,7 +11,8 @@ Install
 Usage
 -----
 
-Start Google Chrome with the option `--remote-debugging-port=9222`.
+Start Google Chrome with the options `--enable-benchmarking
+--remote-debugging-port=9222`.
 
 The following snippet loads an array of URLs serially and generate a cumulative
 HAR file, just like the Record button in the
