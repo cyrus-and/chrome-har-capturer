@@ -3,34 +3,21 @@ chrome-har-capturer
 
 Capture HAR files from a remote Chrome instance.
 
-Install
--------
-
-    npm install chrome-har-capturer
-
 Usage
 -----
 
-Start Google Chrome with the options `--enable-benchmarking
---remote-debugging-port=9222`.
+Start Chrome with options:
 
-The following snippet loads an array of URLs serially and generate a cumulative
-HAR file, just like the Record button in the
-[Network Panel of Chrome Developer Tools][4].
+- `--remote-debugging-port=<port>` to enable the [Remote Debugging Protocol][3]
+  on the port `<port>`;
 
-```javascript
-var fs = require('fs');
-var chc = require('chrome-har-capturer');
-var c = chc.load(['https://github.com',
-                  'http://reddit.com',
-                  'http://www.reddit.com/help/faq']);
-c.on('end', function(har) {
-    fs.writeFileSync('out.har', JSON.stringify(har));
-});
-c.on('error', function() {
-    console.error('Unable to connect to Chrome');
-});
-```
+- `--enable-benchmarking` to enable the Javascript interface that allows
+  `chrome-har-capturer` to flush the DNS cache and the socket pool before
+  loading each URL.
+
+For example:
+
+    google-chrome --remote-debugging-port=9222 --enable-benchmarking
 
 ### Use the bundled utility
 
@@ -47,23 +34,47 @@ file from a list of URLs.
 
 Install globally with:
 
-    npm install -g chrome-har-capturer
+    sudo npm install -g chrome-har-capturer
 
-Load the same URL list as the above example with:
+Load a list of URL with:
 
     chrome-har-capturer -o out.har \
         https://github.com \
         http://reddit.com \
         http://www.reddit.com/help/faq
 
+### Write a custom application
+
+Install locally with:
+
+    npm install chrome-har-capturer
+
+The following snippet loads an array of URLs serially and generate a cumulative
+HAR file, just like the Record button in the [Network Panel of Chrome Developer
+Tools][4].
+
+```javascript
+var fs = require('fs');
+var chc = require('chrome-har-capturer');
+var c = chc.load(['https://github.com',
+                  'http://reddit.com',
+                  'http://www.reddit.com/help/faq']);
+c.on('end', function(har) {
+    fs.writeFileSync('out.har', JSON.stringify(har));
+});
+c.on('error', function() {
+    console.error('Unable to connect to Chrome');
+});
+```
+
 API
 ---
 
 ### load(urls, [options])
 
-Connects to a remote instance of Google Chrome using the
-[Remote Debugging Protocol][3] and loads a list of URLs serially. Returns an
-instance of the `Client` class.
+Connects to a remote instance of Google Chrome using the [Remote Debugging
+Protocol][3] and loads a list of URLs serially. Returns an instance of the
+`Client` class.
 
 `urls` is either an array or a single URL.
 
