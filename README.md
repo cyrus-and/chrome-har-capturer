@@ -84,8 +84,8 @@ Protocol][3] and loads a list of URLs serially. Returns an instance of the
 - `port`: [Remote Debugging Protocol][3] port. Defaults to `9222`.
 - `chooseTab`: Callback used to determine which remote tab attach to. Takes the
   JSON array returned by `http://host:port/json` containing the tab list and
-  must return the numeric index of a tab. Defaults to a function that always
-  returns the first one (`function (tabs) { return 0; }`).
+  must return the numeric index of a tab. Defaults to a function that returns
+  the active one (`function (tabs) { return 0; }`).
 
 ### setVerbose([verbose])
 
