@@ -23,12 +23,18 @@ var argv = require('optimist')
         'output': {
             'demand': false,
             'alias': 'o',
-            'description': 'Dump generated HAR to file instead of stdout'
+            'description': 'Dump to file instead of stdout'
         },
         'verbose': {
             'demand': false,
             'alias': 'v',
             'description': 'Enable verbose output on stderr',
+            'boolean': true
+        },
+        'messages': {
+            'demand': false,
+            'alias': 'm',
+            'description': 'Dump raw messages instead of the generated HAR',
             'boolean': true
         }
     })
@@ -47,12 +53,13 @@ c.on('pageEnd', function(url) {
 c.on('pageError', function(url) {
     console.error('FAIL'.red + ' ' + url);
 });
-c.on('end', function(har) {
-    var prettyHar = JSON.stringify(har, null, 4);
+c.on('end', function(har, messages) {
+    var object = argv.messages ? messages : har;
+    var json = JSON.stringify(object, null, 4);
     if (argv.output) {
-        fs.writeFileSync(output, prettyHar);
+        fs.writeFileSync(output, json);
     } else {
-        console.log(prettyHar);
+        console.log(json);
     }
 });
 c.on('error', function() {

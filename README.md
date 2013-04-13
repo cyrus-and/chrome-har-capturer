@@ -24,10 +24,11 @@ For example:
     Usage: chrome-har-capturer [options] URL...
 
     Options:
-      --host, -h     Remote Debugging Protocol host                [default: "localhost"]
-      --port, -p     Remote Debugging Protocol port                [default: 9222]
-      --output, -o   Dump generated HAR to file instead of stdout
-      --verbose, -v  Enable verbose output on stderr               [boolean]
+      --host, -h      Remote Debugging Protocol host                  [default: "localhost"]
+      --port, -p      Remote Debugging Protocol port                  [default: 9222]
+      --output, -o    Dump to file instead of stdout
+      --verbose, -v   Enable verbose output on stderr                 [boolean]
+      --messages, -m  Dump raw messages instead of the generated HAR  [boolean]
 
 This module comes with a utility that can be used to generate a cumulative HAR
 file from a list of URLs.
