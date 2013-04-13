@@ -39,9 +39,7 @@ var urls = argv._;
 var c = chc.load(urls, {'host': argv.host,
                         'port': argv.port});
 
-if (argv.verbose) {
-    chc.setVerbose();
-}
+chc.setVerbose(argv.verbose);
 
 c.on('pageEnd', function(url) {
     console.error('DONE'.green + ' ' + url);
