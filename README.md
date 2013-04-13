@@ -118,8 +118,8 @@ cumulative HAR object.
 
     function (har) {}
 
-Emitted when every given URL has been loaded. `har` is the cumulative HAR object
-in JSON format.
+Emitted when every given URL has been loaded. `har` is the cumulative HAR
+object.
 
 #### Event: 'error'
 
