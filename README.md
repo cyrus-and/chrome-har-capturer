@@ -116,10 +116,11 @@ cumulative HAR object.
 
 #### Event: 'end'
 
-    function (har) {}
+    function (har, messages) {}
 
-Emitted when every given URL has been loaded. `har` is the cumulative HAR
-object.
+Emitted when every given URL has been loaded. `har` is the cumulative HAR object
+and `messages` is the array of raw messages received through the [Remote
+Debugging Protocol][3].
 
 #### Event: 'error'
 
