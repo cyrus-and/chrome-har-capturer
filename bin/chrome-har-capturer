@@ -6,7 +6,7 @@ var colors = require('colors');
 var argv = require('optimist')
     .usage('Capture HAR files from a remote Chrome instance\n\n' +
            'Usage: $0 [options] URL...')
-    .demand(1)
+    .demand(1) // at least one URL
     .options({
         'host': {
             'demand': false,
