@@ -28,7 +28,7 @@ var argv = require('optimist')
         'verbose': {
             'demand': false,
             'alias': 'v',
-            'description': 'Enable verbose output',
+            'description': 'Enable verbose output on stderr',
             'boolean': true
         }
     })
