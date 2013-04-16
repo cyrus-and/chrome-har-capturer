@@ -9,30 +9,25 @@ var argv = require('optimist')
     .demand(1) // at least one URL
     .options({
         'host': {
-            'demand': false,
             'alias': 'h',
             'description': 'Remote Debugging Protocol host',
             'default': 'localhost'
         },
         'port': {
-            'demand': false,
             'alias': 'p',
             'description': 'Remote Debugging Protocol port',
             'default': 9222
         },
         'output': {
-            'demand': false,
             'alias': 'o',
             'description': 'Dump to file instead of stdout'
         },
         'verbose': {
-            'demand': false,
             'alias': 'v',
             'description': 'Enable verbose output on stderr',
             'boolean': true
         },
         'messages': {
-            'demand': false,
             'alias': 'm',
             'description': 'Dump raw messages instead of the generated HAR',
             'boolean': true
