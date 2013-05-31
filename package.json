@@ -16,7 +16,7 @@
         "chrome-har-capturer": "./bin/chrome-har-capturer"
     },
     "dependencies": {
-        "ws": "0.4.x",
+        "chrome-remote-interface": "0.x.x",
         "optimist": "0.3.x",
         "colors": "0.6.x"
     }
