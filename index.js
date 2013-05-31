@@ -7,5 +7,5 @@ exports.load = function (urls, options) {
 };
 
 exports.setVerbose = function (verbose) {
-    common.verbose = (verbose == undefined ? true : (verbose == true));
-}
+    common.verbose = (typeof verbose === 'undefined' ? true : !!verbose);
+};
