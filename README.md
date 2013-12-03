@@ -11,13 +11,13 @@ Start Chrome with options:
 - `--remote-debugging-port=<port>` to enable the [Remote Debugging Protocol][3]
   on the port `<port>`;
 
-- `--enable-benchmarking` to enable the Javascript interface that allows
-  `chrome-har-capturer` to flush the DNS cache and the socket pool before
-  loading each URL.
+- `--enable-benchmarking --enable-net-benchmarking` to enable the Javascript
+  interface that allows `chrome-har-capturer` to flush the DNS cache and the
+  socket pool before loading each URL.
 
 For example:
 
-    google-chrome --remote-debugging-port=9222 --enable-benchmarking
+    google-chrome --remote-debugging-port=9222 --enable-benchmarking --enable-net-benchmarking
 
 ### Use the bundled utility
 
