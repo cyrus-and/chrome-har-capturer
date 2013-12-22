@@ -13,7 +13,7 @@
         "url" : "http://github.com/cyrus-and/chrome-har-capturer/issues"
     },
     "bin": {
-        "chrome-har-capturer": "./bin/chrome-har-capturer"
+        "chrome-har-capturer": "./bin/chrome-har-capturer.js"
     },
     "dependencies": {
         "chrome-remote-interface": "0.x.x",
