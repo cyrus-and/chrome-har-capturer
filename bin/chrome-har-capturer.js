@@ -58,7 +58,6 @@ c.on('end', function(har, messages) {
     }
 });
 c.on('error', function() {
-    console.error('Unable to connect to Chrome on ' +
-                  argv.host + ':' + argv.port);
+    console.error('Problems with Chrome on ' + argv.host + ':' + argv.port);
     process.exit(1);
 });

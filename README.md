@@ -136,7 +136,8 @@ Debugging Protocol][3].
 
     function () {}
 
-Emitted when `http://host:port/json` can't be reached.
+Emitted when `http://host:port/json` can't be reached or if there are unexpected
+behaviors with Chrome.
 
 Resources
 ---------
