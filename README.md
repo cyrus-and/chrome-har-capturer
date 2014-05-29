@@ -148,5 +148,5 @@ Resources
 
 [1]: http://www.softwareishard.com/blog/har-12-spec/
 [2]: http://www.softwareishard.com/blog/har-viewer/
-[3]: https://developers.google.com/chrome-developer-tools/docs/protocol/1.0/
-[4]: https://developers.google.com/chrome-developer-tools/docs/network
+[3]: https://developer.chrome.com/devtools/docs/protocol/1.1/index
+[4]: https://developer.chrome.com/devtools/docs/network#network-panel-overview
