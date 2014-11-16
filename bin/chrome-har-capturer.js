@@ -43,10 +43,14 @@ var c = chc.load(urls, {'host': argv.host,
 chc.setVerbose(argv.verbose);
 
 c.on('pageEnd', function(url) {
-    console.error('DONE'.green + ' ' + url);
+    var status = 'DONE';
+    if (process.stdout.isTTY) status = status.green;
+    console.error(status + ' ' + url);
 });
 c.on('pageError', function(url) {
-    console.error('FAIL'.red + ' ' + url);
+    var status = 'FAIL';
+    if (process.stdout.isTTY) status = status.red;
+    console.error(status + ' ' + url);
 });
 c.on('end', function(har, messages) {
     var object = argv.messages ? messages : har;
