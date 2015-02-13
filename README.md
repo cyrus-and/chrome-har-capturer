@@ -3,13 +3,16 @@ chrome-har-capturer
 
 Capture HAR files from a remote Chrome instance.
 
+Under the hood this module uses [chrome-remote-interface][cri] to instrument
+Chrome.
+
 Usage
 -----
 
 Start Chrome with options:
 
-- `--remote-debugging-port=<port>` to enable the [Remote Debugging Protocol][3]
-  on the port `<port>`;
+- `--remote-debugging-port=<port>` to enable the
+  [Remote Debugging Protocol][rdp] on the port `<port>`;
 
 - `--enable-benchmarking --enable-net-benchmarking` to enable the Javascript
   interface that allows `chrome-har-capturer` to flush the DNS cache and the
@@ -17,18 +20,21 @@ Start Chrome with options:
 
 For example:
 
-    google-chrome --remote-debugging-port=9222 --enable-benchmarking --enable-net-benchmarking
+    google-chrome --remote-debugging-port=9222 \
+                  --enable-benchmarking \
+                  --enable-net-benchmarking
 
 ### Use the bundled utility
 
-    Usage: chrome-har-capturer [options] URL...
+    Usage: cli [options] URL...
 
     Options:
-      --host, -h      Remote Debugging Protocol host                  [default: "localhost"]
-      --port, -p      Remote Debugging Protocol port                  [default: 9222]
-      --output, -o    Dump to file instead of stdout
-      --verbose, -v   Enable verbose output on stderr                 [boolean]
-      --messages, -m  Dump raw messages instead of the generated HAR  [boolean]
+
+      -h, --help           output usage information
+      -t, --host <host>    Remote Debugging Protocol host
+      -p, --port <port>    Remote Debugging Protocol port
+      -o, --output <file>  dump to file instead of stdout
+      -v, --verbose        enable verbose output on stderr
 
 This module comes with a utility that can be used to generate a cumulative HAR
 file from a list of URLs.
@@ -41,7 +47,8 @@ Load a list of URL with:
 
     chrome-har-capturer -o out.har \
         https://github.com \
-        http://reddit.com \
+        http://www.reddit.com \
+        http://iwillfail \
         http://www.reddit.com/help/faq
 
 ### Write a custom application
@@ -51,8 +58,8 @@ Install locally with:
     npm install chrome-har-capturer
 
 The following snippet loads an array of URLs serially and generate a cumulative
-HAR file, just like the Record button in the [Network Panel of Chrome Developer
-Tools][4].
+HAR file, just like the Record button in the
+[Network Panel of Chrome Developer Tools][net].
 
 ```javascript
 var fs = require('fs');
@@ -60,13 +67,13 @@ var chc = require('chrome-har-capturer');
 var c = chc.load(['https://github.com',
                   'http://reddit.com',
                   'http://www.reddit.com/help/faq']);
-c.on('connect', function() {
+c.on('connect', function () {
     console.log('Connected to Chrome');
 });
-c.on('end', function(har) {
+c.on('end', function (har) {
     fs.writeFileSync('out.har', JSON.stringify(har));
 });
-c.on('error', function() {
+c.on('error', function () {
     console.error('Unable to connect to Chrome');
 });
 ```
@@ -76,16 +83,17 @@ API
 
 ### load(urls, [options])
 
-Connects to a remote instance of Google Chrome using the [Remote Debugging
-Protocol][3] and loads a list of URLs serially. Returns an instance of the
-`Client` class.
+Connects to a remote instance of Google Chrome using the
+[Remote Debugging Protocol][rdp] and loads a list of URLs serially. Returns an
+instance of the `Client` class.
 
-`urls` is either an array or a single URL.
+`urls` is either an array or a single URL (note that URLs must contain the
+schema, otherwise they will be rejected by Chrome).
 
 `options` is an object with the following optional properties:
 
-- `host`: [Remote Debugging Protocol][3] host. Defaults to `localhost`.
-- `port`: [Remote Debugging Protocol][3] port. Defaults to `9222`.
+- `host`: [Remote Debugging Protocol][rdp] host. Defaults to `localhost`.
+- `port`: [Remote Debugging Protocol][rdp] port. Defaults to `9222`.
 - `chooseTab`: Callback used to determine which remote tab attach to. Takes the
   JSON array returned by `http://host:port/json` containing the tab list and
   must return the numeric index of a tab. Defaults to a function that returns
@@ -126,27 +134,26 @@ cumulative HAR object.
 
 #### Event: 'end'
 
-    function (har, messages) {}
+    function (har) {}
 
-Emitted when every given URL has been loaded. `har` is the cumulative HAR object
-and `messages` is the array of raw messages received through the [Remote
-Debugging Protocol][3].
+Emitted when every given URL has been loaded. `har` is the cumulative HAR object.
 
 #### Event: 'error'
 
-    function () {}
+    function (err) {}
 
 Emitted when `http://host:port/json` can't be reached or if there are unexpected
-behaviors with Chrome.
+behaviors with Chrome. `err` in an instance of `Error`.
 
 Resources
 ---------
 
-- [HAR 1.2 Spec][1]
-- [HAR Viewer][2]
-- [Chrome Developer Tools: Remote Debugging Protocol v1.0][3]
+- [HAR 1.2 Spec][har]
+- [HAR Viewer][harview]
+- [Chrome Developer Tools: Remote Debugging Protocol v1.1][rdp]
 
-[1]: http://www.softwareishard.com/blog/har-12-spec/
-[2]: http://www.softwareishard.com/blog/har-viewer/
-[3]: https://developer.chrome.com/devtools/docs/protocol/1.1/index
-[4]: https://developer.chrome.com/devtools/docs/network#network-panel-overview
+[cri]: https://github.com/cyrus-and/chrome-remote-interface
+[har]: http://www.softwareishard.com/blog/har-12-spec/
+[harview]: http://www.softwareishard.com/blog/har-viewer/
+[rdp]: https://developer.chrome.com/devtools/docs/protocol/1.1/index
+[net]: https://developer.chrome.com/devtools/docs/network#network-panel-overview
