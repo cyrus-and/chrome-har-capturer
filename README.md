@@ -65,7 +65,8 @@ HAR file, just like the Record button in the
 var fs = require('fs');
 var chc = require('chrome-har-capturer');
 var c = chc.load(['https://github.com',
-                  'http://reddit.com',
+                  'http://www.reddit.com',
+                  'http://iwillfail',
                   'http://www.reddit.com/help/faq']);
 c.on('connect', function () {
     console.log('Connected to Chrome');
