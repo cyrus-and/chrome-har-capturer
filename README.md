@@ -94,12 +94,12 @@ schema, otherwise they will be rejected by Chrome).
 
 `options` is an object with the following optional properties:
 
-- `host`: [Remote Debugging Protocol][rdp] host. Defaults to `localhost`.
-- `port`: [Remote Debugging Protocol][rdp] port. Defaults to `9222`.
+- `host`: [Remote Debugging Protocol][rdp] host. Defaults to `localhost`;
+- `port`: [Remote Debugging Protocol][rdp] port. Defaults to `9222`;
 - `chooseTab`: Callback used to determine which remote tab attach to. Takes the
   JSON array returned by `http://host:port/json` containing the tab list and
   must return the numeric index of a tab. Defaults to a function that returns
-  the active one (`function (tabs) { return 0; }`).
+  the active one (`function (tabs) { return 0; }`);
 - `fetchContent`: If `true` also capture the requests body.
 
 ### setVerbose([verbose])
