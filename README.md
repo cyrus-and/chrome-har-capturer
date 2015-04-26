@@ -34,6 +34,7 @@ For example:
       -t, --host <host>    Remote Debugging Protocol host
       -p, --port <port>    Remote Debugging Protocol port
       -o, --output <file>  dump to file instead of stdout
+      -c, --content        also capture the requests body
       -v, --verbose        enable verbose output on stderr
 
 This module comes with a utility that can be used to generate a cumulative HAR
@@ -99,6 +100,7 @@ schema, otherwise they will be rejected by Chrome).
   JSON array returned by `http://host:port/json` containing the tab list and
   must return the numeric index of a tab. Defaults to a function that returns
   the active one (`function (tabs) { return 0; }`).
+- `fetchContent`: If `true` also capture the requests body.
 
 ### setVerbose([verbose])
 

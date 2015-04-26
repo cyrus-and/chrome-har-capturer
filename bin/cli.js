@@ -10,6 +10,7 @@ program
     .option('-t, --host <host>', 'Remote Debugging Protocol host')
     .option('-p, --port <port>', 'Remote Debugging Protocol port')
     .option('-o, --output <file>', 'dump to file instead of stdout')
+    .option('-c, --content', 'also capture the requests body')
     .option('-v, --verbose', 'enable verbose output on stderr')
     .parse(process.argv);
 
@@ -20,7 +21,11 @@ if (program.args.length === 0) {
 
 var output = program.output;
 var urls = program.args;
-var c = chc.load(urls, {'host': program.host, 'port': program.port});
+var c = chc.load(urls, {
+    'host': program.host,
+    'port': program.port,
+    'fetchContent': program.content
+});
 
 if (program.verbose) {
     chc.setVerbose();
