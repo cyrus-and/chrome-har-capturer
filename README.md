@@ -100,7 +100,7 @@ schema, otherwise they will be rejected by Chrome).
   JSON array returned by `http://host:port/json` containing the tab list and
   must return the numeric index of a tab. Defaults to a function that returns
   the active one (`function (tabs) { return 0; }`);
-- `fetchContent`: If `true` also capture the requests body.
+- `fetchContent`: If `true` also capture the requests body. Defaults to `false`.
 
 ### setVerbose([verbose])
 
