@@ -148,6 +148,15 @@ Emitted when every given URL has been loaded. `har` is the cumulative HAR object
 Emitted when `http://host:port/json` can't be reached or if there are unexpected
 behaviors with Chrome. `err` in an instance of `Error`.
 
+Issues
+------
+
+There are some known issues regarding the timings computed by this module, there
+are in general differences with the HAR files exported by Chrome itself via
+DevTools. See
+[issue #19](https://github.com/cyrus-and/chrome-har-capturer/issues/19) for more
+details.
+
 Resources
 ---------
 
