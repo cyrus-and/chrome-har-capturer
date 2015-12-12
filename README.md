@@ -26,7 +26,7 @@ For example:
 
 ### Use the bundled utility
 
-    Usage: cli [options] URL...
+    Usage: chrome-har-capturer [options] URL...
 
     Options:
 
