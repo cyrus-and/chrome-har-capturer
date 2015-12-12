@@ -35,6 +35,7 @@ For example:
       -p, --port <port>    Remote Debugging Protocol port
       -o, --output <file>  dump to file instead of stdout
       -c, --content        also capture the requests body
+      -a, --agent <agent>  user agent override
       -d, --delay <ms>     time to wait after the load event
       -v, --verbose        enable verbose output on stderr
 
@@ -102,6 +103,8 @@ schema, otherwise they will be rejected by Chrome).
   must return the numeric index of a tab. Defaults to a function that returns
   the active one (`function (tabs) { return 0; }`);
 - `fetchContent`: If `true` also capture the requests body. Defaults to `false`;
+- `userAgent`: String used to override the user agent. Defaults to the
+  original value;
 - `onLoadDelay`: Milliseconds to wait after the load event is fired before
   stop capturing events. Defaults to `0`.
 

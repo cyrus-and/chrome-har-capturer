@@ -11,6 +11,7 @@ program
     .option('-p, --port <port>', 'Remote Debugging Protocol port')
     .option('-o, --output <file>', 'dump to file instead of stdout')
     .option('-c, --content', 'also capture the requests body')
+    .option('-a, --agent <agent>', 'user agent override')
     .option('-d, --delay <ms>', 'time to wait after the load event')
     .option('-v, --verbose', 'enable verbose output on stderr')
     .parse(process.argv);
@@ -26,6 +27,7 @@ var c = chc.load(urls, {
     'host': program.host,
     'port': program.port,
     'fetchContent': program.content,
+    'userAgent': program.agent,
     'onLoadDelay': program.delay
 });
 
