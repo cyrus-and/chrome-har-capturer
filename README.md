@@ -77,8 +77,8 @@ c.on('connect', function () {
 c.on('end', function (har) {
     fs.writeFileSync('out.har', JSON.stringify(har));
 });
-c.on('error', function () {
-    console.error('Cannot connect to Chrome');
+c.on('error', function (err) {
+    console.error('Cannot connect to Chrome: ' + err);
 });
 ```
 
