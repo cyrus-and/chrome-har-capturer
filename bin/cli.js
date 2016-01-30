@@ -13,6 +13,7 @@ program
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
     .option('-d, --delay <ms>', 'time to wait after the load event')
+    .option('-f, --force', 'continue even without benchmarking extension')
     .option('-v, --verbose', 'enable verbose output on stderr')
     .parse(process.argv);
 
@@ -28,7 +29,8 @@ var c = chc.load(urls, {
     'port': program.port,
     'fetchContent': program.content,
     'userAgent': program.agent,
-    'onLoadDelay': program.delay
+    'onLoadDelay': program.delay,
+    'force': program.force
 });
 
 if (program.verbose) {

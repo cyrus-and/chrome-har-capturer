@@ -37,6 +37,7 @@ For example:
       -c, --content        also capture the requests body
       -a, --agent <agent>  user agent override
       -d, --delay <ms>     time to wait after the load event
+      -f, --force          continue even without benchmarking extension
       -v, --verbose        enable verbose output on stderr
 
 This module comes with a utility that can be used to generate a cumulative HAR
@@ -106,7 +107,10 @@ schema, otherwise they will be rejected by Chrome).
 - `userAgent`: String used to override the user agent. Defaults to the
   original value;
 - `onLoadDelay`: Milliseconds to wait after the load event is fired before
-  stop capturing events. Defaults to `0`.
+  stop capturing events. Defaults to `0`;
+- `force`: If `true` continue even without the benchmarking extension support;
+  useful to inspect Chrome for Android. Note that in this way the DNS cache and
+  sockets pool are not flushed. Defaults to `false`.
 
 ### setVerbose([verbose])
 
