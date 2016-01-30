@@ -110,7 +110,7 @@ schema, otherwise they will be rejected by Chrome).
   stop capturing events. Defaults to `0`;
 - `force`: If `true` continue even without the benchmarking extension support;
   useful to inspect Chrome for Android. Note that in this way the DNS cache and
-  sockets pool are not flushed. Defaults to `false`.
+  socket pool are not flushed. Defaults to `false`.
 
 ### setVerbose([verbose])
 
