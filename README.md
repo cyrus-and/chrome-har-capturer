@@ -37,6 +37,7 @@ For example:
       -c, --content        also capture the requests body
       -a, --agent <agent>  user agent override
       -d, --delay <ms>     time to wait after the load event
+      -g, --give-up <s>    time to wait before giving up
       -f, --force          continue even without benchmarking extension
       -v, --verbose        enable verbose output on stderr
 
@@ -108,6 +109,7 @@ schema, otherwise they will be rejected by Chrome).
   original value;
 - `onLoadDelay`: Milliseconds to wait after the load event is fired before
   stop capturing events. Defaults to `0`;
+- `giveUpTime`; Seconds to wait before giving up with the current URL;
 - `force`: If `true` continue even without the benchmarking extension support;
   useful to inspect Chrome for Android. Note that in this way the DNS cache and
   socket pool are not flushed. Defaults to `false`.

@@ -13,6 +13,7 @@ program
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
     .option('-d, --delay <ms>', 'time to wait after the load event')
+    .option('-g, --give-up <s>', 'time to wait before giving up')
     .option('-f, --force', 'continue even without benchmarking extension')
     .option('-v, --verbose', 'enable verbose output on stderr')
     .parse(process.argv);
@@ -30,6 +31,7 @@ var c = chc.load(urls, {
     'fetchContent': program.content,
     'userAgent': program.agent,
     'onLoadDelay': program.delay,
+    'giveUpTime': program.giveUp,
     'force': program.force
 });
 
