@@ -5,7 +5,7 @@
     "description": "Capture HAR files from a remote Chrome instance",
     "keywords": ["chrome", "har", "remote", "debug"],
     "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
-    "version": "0.8.1",
+    "version": "0.9.0",
     "repository": {
         "type": "git",
         "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
