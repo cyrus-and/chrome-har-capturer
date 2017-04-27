@@ -83,6 +83,10 @@ function checkedRun(done, urls, options, check) {
             }
             done();
         } catch (err) {
+            if (err.name === 'HARError') {
+                console.error(JSON.stringify(har, null, 4));
+                console.error(JSON.stringify(err.errors, null, 4));
+            }
             done(err);
         }
     });
