@@ -1,0 +1,30 @@
+language: node_js
+matrix:
+  include:
+    - node_js: "node"
+    - node_js: "7"
+sudo: required # this seems to be required in order to use caches...
+cache:
+  directories:
+    - node_modules
+    - chrome
+before_script:
+  # fetch and extract Chrome if not cached
+  - if [ ! -x chrome/opt/google/chrome/chrome ]; then
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
+        dpkg -x google-chrome-stable_current_amd64.deb chrome &&
+        rm -f google-chrome-stable_current_amd64.deb
+    else
+        echo 'Using cached Google Chrome';
+    fi
+  # dump the current versions
+  - chrome/opt/google/chrome/chrome --version
+  - npm list
+  # start a fresh new Chrome instance
+  - chrome/opt/google/chrome/chrome
+        --user-data-dir=$(mktemp -d)
+        --no-sandbox --no-first-run --disable-extensions
+        --remote-debugging-port=9222 --headless --disable-gpu
+        about:blank &
+  # wait for Chrome to start up
+  - while ! curl http://localhost:9222 >/dev/null; do sleep 1; done
