@@ -3,7 +3,7 @@
     "author": "Andrea Cardaci <cyrus.and@gmail.com>",
     "license": "MIT",
     "description": "Capture HAR files from a headless Chrome instance",
-    "keywords": ["har", "chrome", "debug", "protocol"],
+    "keywords": ["har", "chrome", "debug", "protocol", "headless"],
     "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
     "version": "0.9.5",
     "repository": {
