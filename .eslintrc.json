@@ -18,6 +18,7 @@
         "no-multi-spaces":             ["error"],
         "no-unused-vars":              ["error", {"args": "none"}],
         "no-var":                      ["error"],
+        "no-console":                  ["off"],
         "prefer-const":                ["error"],
         "quotes":                      ["error", "single"],
         "semi":                        ["error"],
