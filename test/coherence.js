@@ -71,6 +71,26 @@ function runTestSuite(parallel) {
                 nEntries: 2
             });
         });
+        it('Using a small timeout should generate an empty HAR object', (done) => {
+            checkedRun(done, [
+                'http://localhost:9222/json/list',
+                'a',
+                'b',
+                'c',
+                'http://localhost:9222/json/version',
+            ], {
+                parallel,
+                timeout: 0
+            }, {
+                nLoad: 5,
+                nDone: 0,
+                nFail: 5,
+                nPreHook: 5,
+                nPostHook: 0,
+                nPages: 0,
+                nEntries: 0
+            });
+        });
     });
 }
 
