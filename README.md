@@ -86,6 +86,9 @@ the list of supported events).
     - `index`: index of `url` in `urls`;
     - `urls`: input URL array.
 
+    If this hook resolves to a value then it is included in the resulting HAR
+    object as the value of the `_user` key of the this URL's page object.
+
 [CDP client instance]: https://github.com/cyrus-and/chrome-remote-interface#class-cdp
 
 ### Event: 'load'
