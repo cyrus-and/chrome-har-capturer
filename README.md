@@ -77,31 +77,38 @@ the list of supported events).
   time-based metrics). Defaults to `false`;
 - `preHook`: function returning a Promise executed before each page load:
     - `url`: the current URL;
-    - `client`: [CDP client instance].
+    - `client`: [CDP client instance];
+    - `index`: index of `url` in `urls`;
+    - `urls`: input URL array.
 - `postHook`: function returning a Promise executed after each page load event:
     - `url`: the current URL;
-    - `client`: [CDP client instance].
+    - `client`: [CDP client instance];
+    - `index`: index of `url` in `urls`;
+    - `urls`: input URL array.
 
 [CDP client instance]: https://github.com/cyrus-and/chrome-remote-interface#class-cdp
 
 ### Event: 'load'
 
-    function (url) {}
+    function (url, index, urls) {}
 
-Emitted when Chrome is about to load `url`.
+Emitted when Chrome is about to load `url`. `index` is the index of `url` in
+`urls`. `urls` is the array passed to `run()`.
 
 ### Event: 'done'
 
-    function (url) {}
+    function (url, index, urls) {}
 
-Emitted when Chrome finished loading `url`.
+Emitted when Chrome finished loading `url`. `index` is the index of `url` in
+`urls`. `urls` is the array passed to `run()`.
 
 ### Event: fail'
 
-    function (url, err) {}
+    function (url, err, index, urls) {}
 
 Emitted when Chrome cannot load `url`. The `Error` object `err` contains the
-failure reason. Failed URLs will not appear in the resulting HAR object.
+failure reason. Failed URLs will not appear in the resulting HAR object. `index`
+is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 ### Event: 'har'
 
