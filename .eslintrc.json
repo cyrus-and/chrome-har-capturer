@@ -18,6 +18,7 @@
         "no-unused-vars":              ["error", {"args": "none"}],
         "no-var":                      ["error"],
         "quotes":                      ["error", "single"],
+        "strict":                      ["error", "global"],
         "semi":                        ["error"],
         "space-before-blocks":         ["error"],
         "space-before-function-paren": ["error", {"anonymous": "always", "named": "never"}]
