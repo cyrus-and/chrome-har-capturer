@@ -2,6 +2,8 @@
 
 const CHC = require('..');
 
+const validate = require('har-validator');
+
 const assert = require('assert');
 
 function checkedRun(done, urls, options, check) {
@@ -65,7 +67,7 @@ function checkedRun(done, urls, options, check) {
         } catch (err) {
             done(err);
         }
-    }).on('har', (har) => {
+    }).on('har', async (har) => {
         try {
             if (check) {
                 assert.strictEqual(nLoad, check.nLoad, 'load');
@@ -76,6 +78,7 @@ function checkedRun(done, urls, options, check) {
                 assert.strictEqual(har.log.pages.length, check.nPages, 'pages');
                 assert.strictEqual(har.log.entries.length, check.nEntries, 'entries');
             }
+            await validate.har(har);
             done();
         } catch (err) {
             done(err);
