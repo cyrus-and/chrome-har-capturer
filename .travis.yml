@@ -3,7 +3,7 @@ matrix:
   include:
     - node_js: "node"
     - node_js: "7"
-sudo: required # this seems to be required in order to use caches...
+sudo: false
 cache:
   directories:
     - node_modules
