@@ -69,7 +69,8 @@ function checkedRun(done, urls, options, check) {
         }
     }).on('har', async (har) => {
         try {
-            if (check) {
+            await validate.har(har);
+            if (typeof check === 'object') {
                 assert.strictEqual(nLoad, check.nLoad, 'load');
                 assert.strictEqual(nDone, check.nDone, 'done');
                 assert.strictEqual(nFail, check.nFail, 'fail');
@@ -77,8 +78,9 @@ function checkedRun(done, urls, options, check) {
                 assert.strictEqual(nPostHook, check.nPostHook, 'postHook');
                 assert.strictEqual(har.log.pages.length, check.nPages, 'pages');
                 assert.strictEqual(har.log.entries.length, check.nEntries, 'entries');
+            } else if (typeof check === 'function') {
+                await check(har);
             }
-            await validate.har(har);
             done();
         } catch (err) {
             done(err);
