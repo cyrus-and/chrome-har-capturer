@@ -12,7 +12,7 @@ describe('HAR', () => {
             `${httpbin}/get?a=1&b=2&a=1`
         ], {}, (har) => {
             assert.strictEqual(har.log.entries.length, 1, 'entries');
-            assert.strictEqual(har.log.entries[0].request.queryString.length, 3, 'entries');
+            assert.strictEqual(har.log.entries[0].request.queryString.length, 3, 'query string');
         });
     });
 });
