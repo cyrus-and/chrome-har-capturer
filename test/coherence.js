@@ -67,13 +67,15 @@ function checkedRun(done, urls, options, check) {
         }
     }).on('har', (har) => {
         try {
-            assert.strictEqual(nLoad, check.nLoad, 'load');
-            assert.strictEqual(nDone, check.nDone, 'done');
-            assert.strictEqual(nFail, check.nFail, 'fail');
-            assert.strictEqual(nPreHook, check.nPreHook, 'preHook');
-            assert.strictEqual(nPostHook, check.nPostHook, 'postHook');
-            assert.strictEqual(har.log.pages.length, check.nPages, 'pages');
-            assert.strictEqual(har.log.entries.length, check.nEntries, 'entries');
+            if (check) {
+                assert.strictEqual(nLoad, check.nLoad, 'load');
+                assert.strictEqual(nDone, check.nDone, 'done');
+                assert.strictEqual(nFail, check.nFail, 'fail');
+                assert.strictEqual(nPreHook, check.nPreHook, 'preHook');
+                assert.strictEqual(nPostHook, check.nPostHook, 'postHook');
+                assert.strictEqual(har.log.pages.length, check.nPages, 'pages');
+                assert.strictEqual(har.log.entries.length, check.nEntries, 'entries');
+            }
             done();
         } catch (err) {
             done(err);
