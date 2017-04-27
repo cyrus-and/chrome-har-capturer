@@ -9,6 +9,8 @@ cache:
     - node_modules
     - chrome
 before_script:
+  # install httpbin and gunicorn
+  - pip install --user httpbin && pip install --user gunicorn
   # fetch and extract Chrome if not cached
   - if [ ! -x chrome/opt/google/chrome/chrome ]; then
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
@@ -28,3 +30,7 @@ before_script:
         about:blank &
   # wait for Chrome to start up
   - while ! curl http://localhost:9222 >/dev/null; do sleep 1; done
+  # start httpbin
+  - ~/.local/bin/gunicorn httpbin:app &
+  # wait for httpbin to start up
+  - while ! curl http://localhost:8000 >/dev/null; do sleep 1; done
