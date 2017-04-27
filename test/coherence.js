@@ -4,7 +4,7 @@ const CHC = require('..');
 
 const assert = require('assert');
 
-function count(done, urls, options, check) {
+function checkedRun(done, urls, options, check) {
     let nLoad = 0;
     let nDone = 0;
     let nFail = 0;
@@ -83,7 +83,7 @@ function count(done, urls, options, check) {
 
 describe('Coherence', () => {
     it('Passing an empty URL list should generate an empty HAR object', (done) => {
-        count(done, [], {}, {
+        checkedRun(done, [], {}, {
             nLoad: 0,
             nDone: 0,
             nFail: 0,
@@ -94,7 +94,7 @@ describe('Coherence', () => {
         });
     });
     it('Using wrong connection parameters should generate an empty HAR object and notify URL errors', (done) => {
-        count(done, [
+        checkedRun(done, [
             'a',
             'b',
             'c'
@@ -111,7 +111,7 @@ describe('Coherence', () => {
         });
     });
     it('Using wrong URLs should generate an empty HAR object and notify URL errors', (done) => {
-        count(done, [
+        checkedRun(done, [
             'a',
             'b',
             'c'
@@ -126,7 +126,7 @@ describe('Coherence', () => {
         });
     });
     it('Should generate a non-empty HAR object valid URLs', (done) => {
-        count(done, [
+        checkedRun(done, [
             'http://localhost:9222/json/list',
             'a',
             'b',
