@@ -17,7 +17,8 @@
         "chrome-har-capturer": "./bin/cli.js"
     },
     "scripts": {
-        "pretest": "eslint ."
+        "pretest": "eslint .",
+        "test": "mocha"
     },
     "dependencies": {
         "chrome-remote-interface": "0.x.x",
@@ -25,6 +26,7 @@
         "chalk": "1.x.x"
     },
     "devDependencies": {
-        "eslint": "3.x.x"
+        "eslint": "3.x.x",
+        "mocha": "3.x.x"
     }
 }
