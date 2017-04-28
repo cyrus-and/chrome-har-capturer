@@ -33,6 +33,7 @@
     "devDependencies": {
         "eslint": "3.x.x",
         "mocha": "3.x.x",
-        "har-validator": "5.x.x"
+        "har-validator": "5.x.x",
+        "http2": "3.x.x"
     }
 }
