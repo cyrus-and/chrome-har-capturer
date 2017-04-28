@@ -100,5 +100,24 @@ describe('HAR', () => {
                 assert.strictEqual(content.compression, 0, 'compression');
             });
         });
+        it('Properly handle redirections', (done) => {
+            const n = 5;
+            const size = 1000;
+            checkedRun(done, [
+                `http://localhost:8000/redirect?n=${n}&size=${size}`
+            ], {}, (har) => {
+                assert.strictEqual(har.log.entries.length, n + 1, 'entries');
+                for (let i = 0; i < n; i++) {
+                    const {bodySize, content} = har.log.entries[i].response;
+                    assert.strictEqual(bodySize, 0, 'body size');
+                    assert.strictEqual(content.size, 0, 'size');
+                    assert.strictEqual(content.compression, 0, 'compression');
+                }
+                const {bodySize, content} = har.log.entries[n].response;
+                assert.strictEqual(bodySize, size, 'body size');
+                assert.strictEqual(content.size, size, 'size');
+                assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+            });
+        });
     });
 });

@@ -154,6 +154,21 @@ function createTestServer(done) {
                 }
             }
             break;
+        case '/redirect':
+            {
+                const n = Number(urlObject.query.n);
+                const size = Number(urlObject.query.size);
+                if (n) {
+                    response.writeHead(302, {
+                        location: `/redirect?n=${n - 1}&size=${size}`
+                    });
+                    response.end();
+                } else {
+                    const chunk = data(size);
+                    response.end(chunk);
+                }
+            }
+            break;
         }
     }).listen(8000, done);
 }
