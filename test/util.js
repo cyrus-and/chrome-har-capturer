@@ -7,6 +7,7 @@ const validate = require('har-validator');
 const assert = require('assert');
 const http = require('http');
 const url = require('url');
+const zlib = require('zlib');
 
 function checkedRun(done, urls, options, check) {
     let nLoad = 0;
@@ -96,10 +97,37 @@ function checkedRun(done, urls, options, check) {
 
 function createTestServer(done) {
     return http.createServer((request, response) => {
-        const urlObject = url.parse(request.url);
+        const urlObject = url.parse(request.url, true);
         switch (urlObject.pathname) {
         case '/get':
-            response.end('');
+            {
+                response.end();
+            }
+            break;
+        case '/fixed':
+            {
+                const size = Number(urlObject.query.size);
+                response.end(Buffer.alloc(size, 'x'));
+            }
+            break;
+        case '/chunked':
+            {
+                const size = Number(urlObject.query.size);
+                const chunks = Number(urlObject.query.chunks);
+                for (let i = 0; i < chunks; i++) {
+                    response.write(Buffer.alloc(size, 'x'));
+                }
+                response.end();
+            }
+            break;
+        case '/gzip':
+            {
+                const size = Number(urlObject.query.size);
+                zlib.gzip(Buffer.alloc(size, 'x'), (err, buffer) => {
+                    response.setHeader('content-encoding', 'gzip');
+                    response.end(buffer);
+                });
+            }
             break;
         }
     }).listen(8000, done);
