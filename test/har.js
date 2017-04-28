@@ -61,4 +61,19 @@ describe('HAR', () => {
             assert.strictEqual(content.compression, content.size - bodySize, 'compression');
         });
     });
+    it('Properly measure compressed chunked responses', (done) => {
+        const size = 1000;
+        const chunks = 10;
+        const total = size * chunks;
+        checkedRun(done, [
+            `http://localhost:8000/data?size=${size}&chunks=${chunks}&gzip=true`
+        ], {}, (har) => {
+            assert.strictEqual(har.log.entries.length, 1, 'entries');
+            // smaller encoded size due to compression (despite chunked)
+            const {bodySize, content} = har.log.entries[0].response;
+            assert(bodySize < total, 'body size');
+            assert.strictEqual(content.size, total, 'size');
+            assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+        });
+    });
 });
