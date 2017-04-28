@@ -3,7 +3,7 @@
 const {checkedRun} = require('./util');
 
 function runTestSuite(parallel) {
-    describe(parallel ? 'Concurrently' : 'Sequentially', () => {
+    describe(parallel ? `Concurrently (${parallel})` : 'Sequentially', () => {
         it('Passing an empty URL list should generate an empty HAR object', (done) => {
             checkedRun(done, [], {
                 parallel
@@ -21,14 +21,15 @@ function runTestSuite(parallel) {
             checkedRun(done, [
                 'a',
                 'b',
-                'c'
+                'c',
+                'd'
             ], {
                 parallel,
                 port: 1
             }, {
-                nLoad: 3,
+                nLoad: 4,
                 nDone: 0,
-                nFail: 3,
+                nFail: 4,
                 nPreHook: 0,
                 nPostHook: 0,
                 nPages: 0,
@@ -39,14 +40,15 @@ function runTestSuite(parallel) {
             checkedRun(done, [
                 'a',
                 'b',
-                'c'
+                'c',
+                'd'
             ], {
                 parallel
             }, {
-                nLoad: 3,
+                nLoad: 4,
                 nDone: 0,
-                nFail: 3,
-                nPreHook: 3,
+                nFail: 4,
+                nPreHook: 4,
                 nPostHook: 0,
                 nPages: 0,
                 nEntries: 0
@@ -58,14 +60,15 @@ function runTestSuite(parallel) {
                 'a',
                 'b',
                 'c',
+                'd',
                 'http://localhost:9222/json/version',
             ], {
                 parallel
             }, {
-                nLoad: 5,
+                nLoad: 6,
                 nDone: 2,
-                nFail: 3,
-                nPreHook: 5,
+                nFail: 4,
+                nPreHook: 6,
                 nPostHook: 2,
                 nPages: 2,
                 nEntries: 2
@@ -77,15 +80,16 @@ function runTestSuite(parallel) {
                 'a',
                 'b',
                 'c',
+                'd',
                 'http://localhost:9222/json/version',
             ], {
                 parallel,
                 timeout: 0
             }, {
-                nLoad: 5,
+                nLoad: 6,
                 nDone: 0,
-                nFail: 5,
-                nPreHook: 5,
+                nFail: 6,
+                nPreHook: 6,
                 nPostHook: 0,
                 nPages: 0,
                 nEntries: 0
@@ -95,6 +99,8 @@ function runTestSuite(parallel) {
 }
 
 describe('Coherence', () => {
-    runTestSuite(true);
     runTestSuite(false);
+    runTestSuite(2); // even
+    runTestSuite(3); // with remainder
+    runTestSuite(10); // more than URLs
 });

@@ -17,7 +17,7 @@ program
     .option('-a, --agent <agent>', 'user agent override')
     .option('-g, --grace <ms>', 'time to wait after the load event')
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
-    .option('-l, --parallel', 'load the URLs in parallel')
+    .option('-l, --parallel <n>', 'load <n> URLs in parallel')
     .parse(process.argv);
 
 if (program.args.length === 0) {

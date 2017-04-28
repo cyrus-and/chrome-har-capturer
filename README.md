@@ -38,7 +38,7 @@ Command line utility
       -a, --agent <agent>  user agent override
       -g, --grace <ms>     time to wait after the load event
       -u, --timeout <ms>   time to wait before giving up the URL
-      -l, --parallel       load the URLs in parallel
+      -l, --parallel <n>   load <n> URLs in parallel
 
 This module comes with a command line utility that can be used to generate an
 HAR file from a list of URLs. For example:
