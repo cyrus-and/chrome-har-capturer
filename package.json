@@ -16,6 +16,11 @@
     "bin": {
         "chrome-har-capturer": "./bin/cli.js"
     },
+    "files": [
+        "bin",
+        "lib",
+        "index.js"
+    ],
     "scripts": {
         "pretest": "eslint .",
         "test": "mocha"
