@@ -24,7 +24,7 @@ describe('HAR', () => {
     it('Properly measure fixed-size responses', (done) => {
         const size = 1000;
         checkedRun(done, [
-            `http://localhost:8000/fixed?size=${size}`
+            `http://localhost:8000/data?size=${size}`
         ], {}, (har) => {
             assert.strictEqual(har.log.entries.length, 1, 'entries');
             const {bodySize, content} = har.log.entries[0].response;
@@ -38,7 +38,7 @@ describe('HAR', () => {
         const chunks = 10;
         const total = size * chunks;
         checkedRun(done, [
-            `http://localhost:8000/chunked?size=${size}&chunks=${chunks}`
+            `http://localhost:8000/data?size=${size}&chunks=${chunks}`
         ], {}, (har) => {
             assert.strictEqual(har.log.entries.length, 1, 'entries');
             // larger encoded size due to chunked encoding overhead
@@ -51,7 +51,7 @@ describe('HAR', () => {
     it('Properly measure fixed-size compressed responses', (done) => {
         const size = 1000;
         checkedRun(done, [
-            `http://localhost:8000/gzip?size=${size}`
+            `http://localhost:8000/data?size=${size}&gzip=true`
         ], {}, (har) => {
             assert.strictEqual(har.log.entries.length, 1, 'entries');
             // smaller encoded size due to compression

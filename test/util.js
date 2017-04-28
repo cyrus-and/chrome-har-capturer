@@ -95,6 +95,10 @@ function checkedRun(done, urls, options, check) {
     });
 }
 
+function data(size) {
+    return Buffer.alloc(size, 'x');
+}
+
 function createTestServer(done) {
     return http.createServer((request, response) => {
         const urlObject = url.parse(request.url, true);
@@ -104,29 +108,38 @@ function createTestServer(done) {
                 response.end();
             }
             break;
-        case '/fixed':
-            {
-                const size = Number(urlObject.query.size);
-                response.end(Buffer.alloc(size, 'x'));
-            }
-            break;
-        case '/chunked':
+        case '/data':
             {
                 const size = Number(urlObject.query.size);
                 const chunks = Number(urlObject.query.chunks);
-                for (let i = 0; i < chunks; i++) {
-                    response.write(Buffer.alloc(size, 'x'));
-                }
-                response.end();
-            }
-            break;
-        case '/gzip':
-            {
-                const size = Number(urlObject.query.size);
-                zlib.gzip(Buffer.alloc(size, 'x'), (err, buffer) => {
+                const gzip = !!(urlObject.query.gzip);
+                const send = (chunk, end) => {
+                    if (end) {
+                        response.end(chunk);
+                    } else {
+                        response.write(chunk);
+                    }
+                };
+                // enable compression
+                if (gzip) {
                     response.setHeader('content-encoding', 'gzip');
-                    response.end(buffer);
-                });
+                    const gzipStream = zlib.createGzip();
+                    gzipStream.pipe(response);
+                    response = gzipStream;
+                }
+                // trasfer-encoding: chunked
+                if (chunks) {
+                    for (let i = 0; i < chunks; i++) {
+                        const chunk = data(size);
+                        send(chunk, false);
+                    }
+                    response.end();
+                }
+                // set content-length
+                else {
+                    const chunk = data(size);
+                    send(chunk, true);
+                }
             }
             break;
         }
