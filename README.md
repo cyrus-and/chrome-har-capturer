@@ -44,9 +44,11 @@ This module comes with a command line utility that can be used to generate an
 HAR file from a list of URLs. For example:
 
     chrome-har-capturer -o example.har \
-        https://github.com \
-        http://localhost \
-        http://example.com
+        https://github.com/cyrus-and/chrome-remote-interface \
+        http://localhost/will/probably/fail \
+        http://example.com \
+        https://www.npmjs.com/package/chrome-har-capturer \
+        http://nope
 
 Write a custom solution
 -----------------------
