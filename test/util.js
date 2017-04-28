@@ -108,6 +108,18 @@ function createTestServer(done) {
                 response.end();
             }
             break;
+        case '/generate_204':
+            {
+                response.setHeader('content-type', 'text/html');
+                response.end('<img src="/204"/>');
+            }
+            break;
+        case '/204':
+            {
+                response.writeHead(204);
+                response.end();
+            }
+            break;
         case '/data':
             {
                 const size = Number(urlObject.query.size);

@@ -78,5 +78,27 @@ describe('HAR', () => {
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
             });
         });
+        it('Properly measure empty responses', (done) => {
+            checkedRun(done, [
+                'http://localhost:8000/get'
+            ], {}, (har) => {
+                assert.strictEqual(har.log.entries.length, 1, 'entries');
+                const {bodySize, content} = har.log.entries[0].response;
+                assert.strictEqual(bodySize, 0, 'body size');
+                assert.strictEqual(content.size, 0, 'size');
+                assert.strictEqual(content.compression, 0, 'compression');
+            });
+        });
+        it('Properly measure empty responses (204)', (done) => {
+            checkedRun(done, [
+                'http://localhost:8000/generate_204'
+            ], {}, (har) => {
+                assert.strictEqual(har.log.entries.length, 2, 'entries');
+                const {bodySize, content} = har.log.entries[1].response;
+                assert.strictEqual(bodySize, 0, 'body size');
+                assert.strictEqual(content.size, 0, 'size');
+                assert.strictEqual(content.compression, 0, 'compression');
+            });
+        });
     });
 });
