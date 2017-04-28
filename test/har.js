@@ -36,15 +36,14 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
+                assert.strictEqual(content.size, size, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // larger due to headers
                     assert(_transferSize > size, 'transfer size');
                 } else {
                     assert.strictEqual(bodySize, size, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, content.size - bodySize, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -59,16 +58,15 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
+                assert.strictEqual(content.size, total, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, total, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // larger due to headers and chunked encoding overhead
                     assert(_transferSize > total, 'transfer size');
                 } else {
                     // larger encoded size due to chunked encoding overhead
                     assert(bodySize > total, 'body size');
-                    assert.strictEqual(content.size, total, 'size');
                     assert.strictEqual(content.compression, content.size - bodySize, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -81,16 +79,15 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
+                assert.strictEqual(content.size, size, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // smaller due to compression (despite headers)
                     assert(_transferSize < size, 'transfer size');
                 } else {
                     // smaller encoded size due to compression
                     assert(bodySize < size, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, content.size - bodySize, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -105,16 +102,15 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
+                assert.strictEqual(content.size, total, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, total, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // smaller due to compression (despite headers and chunked encoding overhead)
                     assert(_transferSize < total, 'transfer size');
                 } else {
                     // smaller encoded size due to compression (despite chunked)
                     assert(bodySize < total, 'body size');
-                    assert.strictEqual(content.size, total, 'size');
                     assert.strictEqual(content.compression, content.size - bodySize, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -126,15 +122,14 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
+                assert.strictEqual(content.size, 0, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, 0, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // larger due to headers
                     assert(_transferSize > 0, 'transfer size');
                 } else {
                     assert.strictEqual(bodySize, 0, 'body size');
-                    assert.strictEqual(content.size, 0, 'size');
                     assert.strictEqual(content.compression, 0, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -146,15 +141,14 @@ function runTestSuite(name, protocol, server) {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 2, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[1].response;
+                assert.strictEqual(content.size, 0, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, 0, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // larger due to headers
                     assert(_transferSize > 0, 'transfer size');
                 } else {
                     assert.strictEqual(bodySize, 0, 'body size');
-                    assert.strictEqual(content.size, 0, 'size');
                     assert.strictEqual(content.compression, 0, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
@@ -169,29 +163,27 @@ function runTestSuite(name, protocol, server) {
                 assert.strictEqual(har.log.entries.length, n + 1, 'entries');
                 for (let i = 0; i < n; i++) {
                     const {bodySize, headersSize, content, _transferSize} = har.log.entries[i].response;
+                    assert.strictEqual(content.size, 0, 'size');
                     if (name === 'http2') {
                         assert.strictEqual(bodySize, -1, 'body size');
-                        assert.strictEqual(content.size, 0, 'size');
                         assert.strictEqual(content.compression, undefined, 'compression');
                         // larger due to headers
                         assert(_transferSize > 0, 'transfer size');
                     } else {
                         assert.strictEqual(bodySize, 0, 'body size');
-                        assert.strictEqual(content.size, 0, 'size');
                         assert.strictEqual(content.compression, 0, 'compression');
                         assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                     }
                 }
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[n].response;
+                assert.strictEqual(content.size, size, 'size');
                 if (name === 'http2') {
                     assert.strictEqual(bodySize, -1, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, undefined, 'compression');
                     // larger due to headers
                     assert(_transferSize > size, 'transfer size');
                 } else {
                     assert.strictEqual(bodySize, size, 'body size');
-                    assert.strictEqual(content.size, size, 'size');
                     assert.strictEqual(content.compression, content.size - bodySize, 'compression');
                     assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
