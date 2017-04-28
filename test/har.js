@@ -29,10 +29,11 @@ describe('HAR', () => {
                 `http://localhost:8000/data?size=${size}`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
-                const {bodySize, content} = har.log.entries[0].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(bodySize, size, 'body size');
                 assert.strictEqual(content.size, size, 'size');
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly measure chunked responses', (done) => {
@@ -44,10 +45,11 @@ describe('HAR', () => {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // larger encoded size due to chunked encoding overhead
-                const {bodySize, content} = har.log.entries[0].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert(bodySize > total, 'body size');
                 assert.strictEqual(content.size, total, 'size');
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly measure fixed-size compressed responses', (done) => {
@@ -57,10 +59,11 @@ describe('HAR', () => {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // smaller encoded size due to compression
-                const {bodySize, content} = har.log.entries[0].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert(bodySize < size, 'body size');
                 assert.strictEqual(content.size, size, 'size');
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly measure compressed chunked responses', (done) => {
@@ -72,10 +75,11 @@ describe('HAR', () => {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // smaller encoded size due to compression (despite chunked)
-                const {bodySize, content} = har.log.entries[0].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert(bodySize < total, 'body size');
                 assert.strictEqual(content.size, total, 'size');
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly measure empty responses', (done) => {
@@ -83,10 +87,11 @@ describe('HAR', () => {
                 'http://localhost:8000/get'
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
-                const {bodySize, content} = har.log.entries[0].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(bodySize, 0, 'body size');
                 assert.strictEqual(content.size, 0, 'size');
                 assert.strictEqual(content.compression, 0, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly measure empty responses (204)', (done) => {
@@ -94,10 +99,11 @@ describe('HAR', () => {
                 'http://localhost:8000/generate_204'
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 2, 'entries');
-                const {bodySize, content} = har.log.entries[1].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[1].response;
                 assert.strictEqual(bodySize, 0, 'body size');
                 assert.strictEqual(content.size, 0, 'size');
                 assert.strictEqual(content.compression, 0, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
         it('Properly handle redirections', (done) => {
@@ -108,15 +114,17 @@ describe('HAR', () => {
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, n + 1, 'entries');
                 for (let i = 0; i < n; i++) {
-                    const {bodySize, content} = har.log.entries[i].response;
+                    const {bodySize, headersSize, content, _transferSize} = har.log.entries[i].response;
                     assert.strictEqual(bodySize, 0, 'body size');
                     assert.strictEqual(content.size, 0, 'size');
                     assert.strictEqual(content.compression, 0, 'compression');
+                    assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
                 }
-                const {bodySize, content} = har.log.entries[n].response;
+                const {bodySize, headersSize, content, _transferSize} = har.log.entries[n].response;
                 assert.strictEqual(bodySize, size, 'body size');
                 assert.strictEqual(content.size, size, 'size');
                 assert.strictEqual(content.compression, content.size - bodySize, 'compression');
+                assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
     });
