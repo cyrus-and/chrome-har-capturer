@@ -5,6 +5,8 @@ const CHC = require('..');
 const validate = require('har-validator');
 
 const assert = require('assert');
+const http = require('http');
+const url = require('url');
 
 function checkedRun(done, urls, options, check) {
     let nLoad = 0;
@@ -92,4 +94,15 @@ function checkedRun(done, urls, options, check) {
     });
 }
 
-module.exports = {checkedRun};
+function createTestServer(done) {
+    return http.createServer((request, response) => {
+        const urlObject = url.parse(request.url);
+        switch (urlObject.pathname) {
+        case '/get':
+            response.end('');
+            break;
+        }
+    }).listen(8000, done);
+}
+
+module.exports = {checkedRun, createTestServer};
