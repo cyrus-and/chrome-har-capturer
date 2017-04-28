@@ -1,21 +1,26 @@
 'use strict';
 
-const {checkedRun, createTestServer} = require('./util');
+const {checkedRun, testServerHandler} = require('./util');
 
 const assert = require('assert');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 
-describe('HAR', () => {
-    let testServer;
+function runTestSuite(protocol, server) {
+    const port = 8000;
+    const baseHost = `${protocol}://localhost:${8000}`;
     before('Start web server', (done) => {
-        testServer = createTestServer(done);
+        server.on('request', testServerHandler);
+        server.listen(port, done);
     });
     after('Stop web server', (done) => {
-        testServer.close(done);
+        server.close(done);
     });
     describe('Misc', () => {
         it('Properly handle repeated keys in query strings', (done) => {
             checkedRun(done, [
-                'http://localhost:8000/get?a=1&b=2&a=1'
+                `${baseHost}/get?a=1&b=2&a=1`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 assert.strictEqual(har.log.entries[0].request.queryString.length, 3, 'query string');
@@ -26,7 +31,7 @@ describe('HAR', () => {
         it('Properly measure fixed-size responses', (done) => {
             const size = 1000;
             checkedRun(done, [
-                `http://localhost:8000/data?size=${size}`
+                `${baseHost}/data?size=${size}`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
@@ -41,7 +46,7 @@ describe('HAR', () => {
             const chunks = 10;
             const total = size * chunks;
             checkedRun(done, [
-                `http://localhost:8000/data?size=${size}&chunks=${chunks}`
+                `${baseHost}/data?size=${size}&chunks=${chunks}`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // larger encoded size due to chunked encoding overhead
@@ -55,7 +60,7 @@ describe('HAR', () => {
         it('Properly measure fixed-size compressed responses', (done) => {
             const size = 1000;
             checkedRun(done, [
-                `http://localhost:8000/data?size=${size}&gzip=true`
+                `${baseHost}/data?size=${size}&gzip=true`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // smaller encoded size due to compression
@@ -71,7 +76,7 @@ describe('HAR', () => {
             const chunks = 10;
             const total = size * chunks;
             checkedRun(done, [
-                `http://localhost:8000/data?size=${size}&chunks=${chunks}&gzip=true`
+                `${baseHost}/data?size=${size}&chunks=${chunks}&gzip=true`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 // smaller encoded size due to compression (despite chunked)
@@ -84,7 +89,7 @@ describe('HAR', () => {
         });
         it('Properly measure empty responses', (done) => {
             checkedRun(done, [
-                'http://localhost:8000/get'
+                `${baseHost}/get`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
@@ -96,7 +101,7 @@ describe('HAR', () => {
         });
         it('Properly measure empty responses (204)', (done) => {
             checkedRun(done, [
-                'http://localhost:8000/generate_204'
+                `${baseHost}/generate_204`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, 2, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[1].response;
@@ -110,7 +115,7 @@ describe('HAR', () => {
             const n = 5;
             const size = 1000;
             checkedRun(done, [
-                `http://localhost:8000/redirect?n=${n}&size=${size}`
+                `${baseHost}/redirect?n=${n}&size=${size}`
             ], {}, (har) => {
                 assert.strictEqual(har.log.entries.length, n + 1, 'entries');
                 for (let i = 0; i < n; i++) {
@@ -127,5 +132,17 @@ describe('HAR', () => {
                 assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
             });
         });
+    });
+}
+
+describe('HAR', () => {
+    describe('HTTP', () => {
+        runTestSuite('http', http.createServer());
+    });
+    describe('HTTPS', () => {
+        runTestSuite('https', https.createServer({
+            key: fs.readFileSync('test/key.pem'),
+            cert: fs.readFileSync('test/cert.pem')
+        }));
     });
 });

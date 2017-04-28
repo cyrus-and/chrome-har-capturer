@@ -5,7 +5,6 @@ const CHC = require('..');
 const validate = require('har-validator');
 
 const assert = require('assert');
-const http = require('http');
 const url = require('url');
 const zlib = require('zlib');
 
@@ -16,7 +15,16 @@ function checkedRun(done, urls, options, check) {
     let nPreHook = 0;
     let nPostHook = 0;
     if (options) {
-        options.preHook = (url, client, index, _urls) => {
+        options.preHook = async (url, client, index, _urls) => {
+            // ignore certificate errors (requires Chrome 59) because
+            // --ignore-certificate-errors doesn't work in headless mode
+            const {Security} = client;
+            await Security.enable();
+            await Security.setOverrideCertificateErrors({override: true});
+            Security.certificateError(({eventId}) => {
+                Security.handleCertificateError({eventId, action: 'continue'});
+            });
+
             nPreHook++;
             try {
                 assert.strictEqual(typeof url, 'string');
@@ -99,78 +107,76 @@ function data(size) {
     return Buffer.alloc(size, 'x');
 }
 
-function createTestServer(done) {
-    return http.createServer((request, response) => {
-        const urlObject = url.parse(request.url, true);
-        switch (urlObject.pathname) {
-        case '/get':
-            {
-                response.end();
-            }
-            break;
-        case '/generate_204':
-            {
-                response.setHeader('content-type', 'text/html');
-                response.end('<img src="/204"/>');
-            }
-            break;
-        case '/204':
-            {
-                response.writeHead(204);
-                response.end();
-            }
-            break;
-        case '/data':
-            {
-                const size = Number(urlObject.query.size);
-                const chunks = Number(urlObject.query.chunks);
-                const gzip = !!(urlObject.query.gzip);
-                const send = (chunk, end) => {
-                    if (end) {
-                        response.end(chunk);
-                    } else {
-                        response.write(chunk);
-                    }
-                };
-                // enable compression
-                if (gzip) {
-                    response.setHeader('content-encoding', 'gzip');
-                    const gzipStream = zlib.createGzip();
-                    gzipStream.pipe(response);
-                    response = gzipStream;
-                }
-                // trasfer-encoding: chunked
-                if (chunks) {
-                    for (let i = 0; i < chunks; i++) {
-                        const chunk = data(size);
-                        send(chunk, false);
-                    }
-                    response.end();
-                }
-                // set content-length
-                else {
-                    const chunk = data(size);
-                    send(chunk, true);
-                }
-            }
-            break;
-        case '/redirect':
-            {
-                const n = Number(urlObject.query.n);
-                const size = Number(urlObject.query.size);
-                if (n) {
-                    response.writeHead(302, {
-                        location: `/redirect?n=${n - 1}&size=${size}`
-                    });
-                    response.end();
-                } else {
-                    const chunk = data(size);
-                    response.end(chunk);
-                }
-            }
-            break;
+function testServerHandler(request, response) {
+    const urlObject = url.parse(request.url, true);
+    switch (urlObject.pathname) {
+    case '/get':
+        {
+            response.end();
         }
-    }).listen(8000, done);
+        break;
+    case '/generate_204':
+        {
+            response.setHeader('content-type', 'text/html');
+            response.end('<img src="/204"/>');
+        }
+        break;
+    case '/204':
+        {
+            response.writeHead(204);
+            response.end();
+        }
+        break;
+    case '/data':
+        {
+            const size = Number(urlObject.query.size);
+            const chunks = Number(urlObject.query.chunks);
+            const gzip = !!(urlObject.query.gzip);
+            const send = (chunk, end) => {
+                if (end) {
+                    response.end(chunk);
+                } else {
+                    response.write(chunk);
+                }
+            };
+            // enable compression
+            if (gzip) {
+                response.setHeader('content-encoding', 'gzip');
+                const gzipStream = zlib.createGzip();
+                gzipStream.pipe(response);
+                response = gzipStream;
+            }
+            // trasfer-encoding: chunked
+            if (chunks) {
+                for (let i = 0; i < chunks; i++) {
+                    const chunk = data(size);
+                    send(chunk, false);
+                }
+                response.end();
+            }
+            // set content-length
+            else {
+                const chunk = data(size);
+                send(chunk, true);
+            }
+        }
+        break;
+    case '/redirect':
+        {
+            const n = Number(urlObject.query.n);
+            const size = Number(urlObject.query.size);
+            if (n) {
+                response.writeHead(302, {
+                    location: `/redirect?n=${n - 1}&size=${size}`
+                });
+                response.end();
+            } else {
+                const chunk = data(size);
+                response.end(chunk);
+            }
+        }
+        break;
+    }
 }
 
-module.exports = {checkedRun, createTestServer};
+module.exports = {checkedRun, testServerHandler};
