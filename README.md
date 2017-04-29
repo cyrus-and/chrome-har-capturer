@@ -8,7 +8,7 @@ Under the hood this module uses [chrome-remote-interface] to instrument Chrome.
 [chrome-remote-interface]: https://github.com/cyrus-and/chrome-remote-interface
 [headless]: https://www.chromestatus.com/feature/5678767817097216
 
-<!-- TODO scrot -->
+![Screenshot](http://i.imgur.com/HoDaGr3.png)
 
 Setup
 -----
@@ -17,50 +17,40 @@ Install this module from NPM:
 
     npm install chrome-har-capturer
 
-Start Chrome with the following options:
+Start Chrome like this:
 
     google-chrome --remote-debugging-port=9222 --headless
 
 Command line utility
 --------------------
 
-    Usage: chrome-har-capturer [options] URL...
+The command line utility can be used to generate HAR files from a list of
+URLs. The following options are available:
 
-    Options:
+    -h, --help           output usage information
+    -t, --host <host>    Chrome Debugging Protocol host
+    -p, --port <port>    Chrome Debugging Protocol port
+    -x, --width <dip>    frame width in DIP
+    -y, --height <dip>   frame height in DIP
+    -o, --output <file>  write to file instead of stdout
+    -c, --content        also capture the requests body
+    -a, --agent <agent>  user agent override
+    -g, --grace <ms>     time to wait after the load event
+    -u, --timeout <ms>   time to wait before giving up the URL
+    -l, --parallel <n>   load <n> URLs in parallel
 
-      -h, --help           output usage information
-      -t, --host <host>    Chrome Debugging Protocol host
-      -p, --port <port>    Chrome Debugging Protocol port
-      -x, --width <dip>    frame width in DIP
-      -y, --height <dip>   frame height in DIP
-      -o, --output <file>  write to file instead of stdout
-      -c, --content        also capture the requests body
-      -a, --agent <agent>  user agent override
-      -g, --grace <ms>     time to wait after the load event
-      -u, --timeout <ms>   time to wait before giving up the URL
-      -l, --parallel <n>   load <n> URLs in parallel
+Library
+-------
 
-This module comes with a command line utility that can be used to generate an
-HAR file from a list of URLs. For example:
-
-    chrome-har-capturer -o example.har \
-        https://github.com/cyrus-and/chrome-remote-interface \
-        http://localhost/will/probably/fail \
-        http://example.com \
-        https://www.npmjs.com/package/chrome-har-capturer \
-        http://nope
-
-Write a custom solution
------------------------
-
-See the command line utility [source code] for a working example.
+Alternatively this module provides a simple [API](#api) that can be used to
+write custom applications. See the command line utility [source code] for a
+working example.
 
 [source code]: https://github.com/cyrus-and/chrome-har-capturer/blob/master/bin/cli.js
 
-API
----
+### API
 
-### run(urls, [options])
+#### run(urls, [options])
 
 Start the loading of a batch of URLs. Returns an event emitter (see below for
 the list of supported events).
@@ -93,21 +83,21 @@ the list of supported events).
 
 [CDP client instance]: https://github.com/cyrus-and/chrome-remote-interface#class-cdp
 
-### Event: 'load'
+#### Event: 'load'
 
     function (url, index, urls) {}
 
 Emitted when Chrome is about to load `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
-### Event: 'done'
+#### Event: 'done'
 
     function (url, index, urls) {}
 
 Emitted when Chrome finished loading `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
-### Event: fail'
+#### Event: fail'
 
     function (url, err, index, urls) {}
 
@@ -115,7 +105,7 @@ Emitted when Chrome cannot load `url`. The `Error` object `err` contains the
 failure reason. Failed URLs will not appear in the resulting HAR object. `index`
 is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
-### Event: 'har'
+#### Event: 'har'
 
     function (har) {}
 
