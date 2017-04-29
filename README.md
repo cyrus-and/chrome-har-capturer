@@ -109,8 +109,8 @@ is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
     function (har) {}
 
-Emitted when all the URLs have been processed. `har` is the resulting HAR
-object.
+Emitted when all the URLs have been processed. If all the URLs fails then a
+valid empty HAR object is returned. `har` is the resulting HAR object.
 
 Resources
 ---------
