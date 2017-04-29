@@ -21,6 +21,15 @@ Start Chrome like this:
 
     google-chrome --remote-debugging-port=9222 --headless
 
+**Important note:** this is a complete rewrite that uses brand new JavaScript
+features and takes full advantage of the headless mode of Chrome; the upshot is
+that it requires Node.js version 7.6.0+ and can only work in headless mode. It
+also introduces breaking changes in the API. If these requirements are
+unfeasible stick with version [0.9.5] but consider that it will not be supported
+anymore.
+
+[0.9.5]: https://github.com/cyrus-and/chrome-har-capturer/releases/tag/v0.9.5
+
 Command line utility
 --------------------
 
