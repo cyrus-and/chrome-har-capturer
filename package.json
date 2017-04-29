@@ -5,7 +5,7 @@
     "description": "Capture HAR files from a headless Chrome instance",
     "keywords": ["har", "chrome", "debug", "protocol", "headless"],
     "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
-    "version": "0.9.5",
+    "version": "0.10.0",
     "repository": {
         "type": "git",
         "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
