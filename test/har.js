@@ -22,7 +22,7 @@ function runTestSuite(name, protocol, server) {
         it('Properly handle repeated keys in query strings', (done) => {
             checkedRun(done, [
                 `${baseHost}/get?a=1&b=2&a=1`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 assert.strictEqual(har.log.entries[0].request.queryString.length, 3, 'query string');
             });
@@ -33,7 +33,7 @@ function runTestSuite(name, protocol, server) {
             const size = 1000;
             checkedRun(done, [
                 `${baseHost}/data?size=${size}`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(content.size, size, 'size');
@@ -55,7 +55,7 @@ function runTestSuite(name, protocol, server) {
             const total = size * chunks;
             checkedRun(done, [
                 `${baseHost}/data?size=${size}&chunks=${chunks}`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(content.size, total, 'size');
@@ -76,7 +76,7 @@ function runTestSuite(name, protocol, server) {
             const size = 1000;
             checkedRun(done, [
                 `${baseHost}/data?size=${size}&gzip=true`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(content.size, size, 'size');
@@ -99,7 +99,7 @@ function runTestSuite(name, protocol, server) {
             const total = size * chunks;
             checkedRun(done, [
                 `${baseHost}/data?size=${size}&chunks=${chunks}&gzip=true`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(content.size, total, 'size');
@@ -119,7 +119,7 @@ function runTestSuite(name, protocol, server) {
         it('Properly measure empty responses', (done) => {
             checkedRun(done, [
                 `${baseHost}/get`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 1, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[0].response;
                 assert.strictEqual(content.size, 0, 'size');
@@ -138,7 +138,7 @@ function runTestSuite(name, protocol, server) {
         it('Properly measure empty responses (204)', (done) => {
             checkedRun(done, [
                 `${baseHost}/generate_204`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, 2, 'entries');
                 const {bodySize, headersSize, content, _transferSize} = har.log.entries[1].response;
                 assert.strictEqual(content.size, 0, 'size');
@@ -159,7 +159,7 @@ function runTestSuite(name, protocol, server) {
             const size = 1000;
             checkedRun(done, [
                 `${baseHost}/redirect?n=${n}&size=${size}`
-            ], {}, (har) => {
+            ], {}, {}, (events, har) => {
                 assert.strictEqual(har.log.entries.length, n + 1, 'entries');
                 for (let i = 0; i < n; i++) {
                     const {bodySize, headersSize, content, _transferSize} = har.log.entries[i].response;

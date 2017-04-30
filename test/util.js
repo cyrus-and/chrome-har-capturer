@@ -8,7 +8,7 @@ const assert = require('assert');
 const url = require('url');
 const zlib = require('zlib');
 
-function checkedRun(done, urls, options = {}, check) {
+function checkedRun(done, urls, options, expected, check) {
     let nLoad = 0;
     let nDone = 0;
     let nFail = 0;
@@ -78,18 +78,23 @@ function checkedRun(done, urls, options = {}, check) {
         }
     }).on('har', async (har) => {
         try {
+            // check HAR syntax
             await validate.har(har);
-            if (typeof check === 'object') {
-                assert.strictEqual(nLoad, check.nLoad, 'load');
-                assert.strictEqual(nDone, check.nDone, 'done');
-                assert.strictEqual(nFail, check.nFail, 'fail');
-                assert.strictEqual(nPreHook, check.nPreHook, 'preHook');
-                assert.strictEqual(nPostHook, check.nPostHook, 'postHook');
-                assert.strictEqual(har.log.pages.length, check.nPages, 'pages');
-                assert.strictEqual(har.log.entries.length, check.nEntries, 'entries');
-            } else if (typeof check === 'function') {
+            // custom expected counts
+            if (Object.keys(expected).length) {
+                assert.strictEqual(nLoad, expected.nLoad, 'load');
+                assert.strictEqual(nDone, expected.nDone, 'done');
+                assert.strictEqual(nFail, expected.nFail, 'fail');
+                assert.strictEqual(nPreHook, expected.nPreHook, 'preHook');
+                assert.strictEqual(nPostHook, expected.nPostHook, 'postHook');
+                assert.strictEqual(har.log.pages.length, expected.nPages, 'pages');
+                assert.strictEqual(har.log.entries.length, expected.nEntries, 'entries');
+            }
+            // custom check function
+            if (check) {
                 await check(har);
             }
+            // finally done
             done();
         } catch (err) {
             if (err.name === 'HARError') {
