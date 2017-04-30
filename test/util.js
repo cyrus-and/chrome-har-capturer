@@ -8,45 +8,43 @@ const assert = require('assert');
 const url = require('url');
 const zlib = require('zlib');
 
-function checkedRun(done, urls, options, check) {
+function checkedRun(done, urls, options = {}, check) {
     let nLoad = 0;
     let nDone = 0;
     let nFail = 0;
     let nPreHook = 0;
     let nPostHook = 0;
-    if (options) {
-        options.preHook = async (url, client, index, _urls) => {
-            // ignore certificate errors (requires Chrome 59) because
-            // --ignore-certificate-errors doesn't work in headless mode
-            const {Security} = client;
-            await Security.enable();
-            await Security.setOverrideCertificateErrors({override: true});
-            Security.certificateError(({eventId}) => {
-                Security.handleCertificateError({eventId, action: 'continue'});
-            });
+    options.preHook = async (url, client, index, _urls) => {
+        // ignore certificate errors (requires Chrome 59) because
+        // --ignore-certificate-errors doesn't work in headless mode
+        const {Security} = client;
+        await Security.enable();
+        await Security.setOverrideCertificateErrors({override: true});
+        Security.certificateError(({eventId}) => {
+            Security.handleCertificateError({eventId, action: 'continue'});
+        });
 
-            nPreHook++;
-            try {
-                assert.strictEqual(typeof url, 'string');
-                assert.strictEqual(typeof client.close, 'function');
-                assert.strictEqual(urls[index], url);
-                assert.deepStrictEqual(_urls, urls);
-            } catch (err) {
-                done(err);
-            }
-        };
-        options.postHook = (url, client, index, _urls) => {
-            nPostHook++;
-            try {
-                assert.strictEqual(typeof url, 'string');
-                assert.strictEqual(typeof client.close, 'function');
-                assert.strictEqual(_urls[index], url);
-                assert.deepStrictEqual(_urls, urls);
-            } catch (err) {
-                done(err);
-            }
-        };
-    }
+        nPreHook++;
+        try {
+            assert.strictEqual(typeof url, 'string');
+            assert.strictEqual(typeof client.close, 'function');
+            assert.strictEqual(urls[index], url);
+            assert.deepStrictEqual(_urls, urls);
+        } catch (err) {
+            done(err);
+        }
+    };
+    options.postHook = (url, client, index, _urls) => {
+        nPostHook++;
+        try {
+            assert.strictEqual(typeof url, 'string');
+            assert.strictEqual(typeof client.close, 'function');
+            assert.strictEqual(_urls[index], url);
+            assert.deepStrictEqual(_urls, urls);
+        } catch (err) {
+            done(err);
+        }
+    };
     CHC.run(
         urls,
         options
