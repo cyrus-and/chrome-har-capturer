@@ -14,6 +14,7 @@ function checkedRun(done, urls, options, expected, check) {
     let nFail = 0;
     let nPreHook = 0;
     let nPostHook = 0;
+    const events = [];
     options.preHook = async (url, client, index, _urls) => {
         // ignore certificate errors (requires Chrome 59) because
         // --ignore-certificate-errors doesn't work in headless mode
@@ -25,6 +26,7 @@ function checkedRun(done, urls, options, expected, check) {
         });
 
         nPreHook++;
+        events.push('preHook');
         try {
             assert.strictEqual(typeof url, 'string');
             assert.strictEqual(typeof client.close, 'function');
@@ -36,6 +38,7 @@ function checkedRun(done, urls, options, expected, check) {
     };
     options.postHook = (url, client, index, _urls) => {
         nPostHook++;
+        events.push('postHook');
         try {
             assert.strictEqual(typeof url, 'string');
             assert.strictEqual(typeof client.close, 'function');
@@ -92,7 +95,7 @@ function checkedRun(done, urls, options, expected, check) {
             }
             // custom check function
             if (check) {
-                await check(har);
+                await check(events, har);
             }
             // finally done
             done();

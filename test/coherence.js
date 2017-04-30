@@ -2,6 +2,8 @@
 
 const {checkedRun} = require('./util');
 
+const assert = require('assert');
+
 function runTestSuite(parallel) {
     describe(parallel ? `Concurrently (${parallel})` : 'Sequentially', () => {
         it('Passing an empty URL list should generate an empty HAR object', (done) => {
@@ -93,6 +95,36 @@ function runTestSuite(parallel) {
                 nPostHook: 0,
                 nPages: 0,
                 nEntries: 0
+            });
+        });
+        it('The order of hooks should be coherent with the concurrency setting', (done) => {
+            checkedRun(done, [
+                'http://localhost:9222/json/version',
+                'http://localhost:9222/json/version',
+                'http://localhost:9222/json/version',
+                'http://localhost:9222/json/version',
+                'http://localhost:9222/json/version',
+                'http://localhost:9222/json/version',
+            ], {
+                parallel
+            }, {
+                nLoad: 6,
+                nDone: 6,
+                nFail: 0,
+                nPreHook: 6,
+                nPostHook: 6,
+                nPages: 6,
+                nEntries: 6
+            }, (events, har) => {
+                // the event array must start with 'degree' occurrences of
+                // 'preHook' followed by a 'postHook'
+                if (events.length) {
+                    const degree = parallel || 1;
+                    const firstPostHookIndex = events.indexOf('postHook');
+                    assert.strictEqual(firstPostHookIndex, Math.min(degree, 6), 'postHook');
+                    const allPreHooks = events.slice(0, firstPostHookIndex).every((event) => event === 'preHook');
+                    assert(allPreHooks, 'preHook');
+                }
             });
         });
     });
