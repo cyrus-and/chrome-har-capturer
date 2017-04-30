@@ -54,7 +54,7 @@ function runTestSuite(parallel) {
                 nEntries: 0
             });
         });
-        it('Should generate a non-empty HAR object valid URLs', (done) => {
+        it('Should generate a non-empty HAR object with valid URLs', (done) => {
             checkedRun(done, [
                 'http://localhost:9222/json/list',
                 'a',
