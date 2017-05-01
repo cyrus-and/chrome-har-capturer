@@ -8,7 +8,7 @@ const assert = require('assert');
 const url = require('url');
 const zlib = require('zlib');
 
-function checkedRun(done, urls, options, expected, check) {
+function checkedRun({done, urls, options = {}, expected, check}) {
     let nLoad = 0;
     let nDone = 0;
     let nFail = 0;
@@ -84,7 +84,7 @@ function checkedRun(done, urls, options, expected, check) {
             // check HAR syntax
             await validate.har(har);
             // custom expected counts
-            if (Object.keys(expected).length) {
+            if (expected) {
                 assert.strictEqual(nLoad, expected.nLoad, 'load');
                 assert.strictEqual(nDone, expected.nDone, 'done');
                 assert.strictEqual(nFail, expected.nFail, 'fail');
