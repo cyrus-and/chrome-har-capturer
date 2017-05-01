@@ -26,11 +26,16 @@ if (program.args.length === 0) {
 }
 
 function prettify(url) {
-    const {parse, format} = require('url');
-    url = parse(url);
-    url.protocol = chalk.gray(url.protocol.slice(0, -1));
-    url.host = chalk.bold(url.host);
-    return format(url).replace(/[:/?=#]/g, chalk.gray('$&'));
+    try {
+        const {parse, format} = require('url');
+        const urlObject = parse(url);
+        urlObject.protocol = chalk.gray(urlObject.protocol.slice(0, -1));
+        urlObject.host = chalk.bold(urlObject.host);
+        return format(urlObject).replace(/[:/?=#]/g, chalk.gray('$&'));
+    } catch (err) {
+        // invalid URL delegate error detection
+        return url;
+    }
 }
 
 function log(string) {
