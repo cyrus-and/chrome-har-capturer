@@ -23,7 +23,7 @@
     ],
     "scripts": {
         "pretest": "eslint .",
-        "test": "mocha"
+        "test": "mocha --no-exit"
     },
     "dependencies": {
         "chrome-remote-interface": "0.x.x",
