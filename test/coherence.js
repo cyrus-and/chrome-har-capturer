@@ -96,6 +96,35 @@ function runTestSuite(parallel) {
                 }
             });
         });
+        // XXX this only makes sense when the '--no-exit' option is used: if the
+        // implementation fails to clean the timeout then mocha *never*
+        // (2147483647) terminates yet this test passes
+        it('Using a huge timeout should not matter if all the URLs fails or succeeds', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    'http://localhost:9222/json/list',
+                    'a',
+                    'b',
+                    'c',
+                    'd',
+                    'http://localhost:9222/json/version'
+                ],
+                options: {
+                    parallel,
+                    timeout: 2147483647
+                },
+                expected: {
+                    nLoad: 6,
+                    nDone: 2,
+                    nFail: 4,
+                    nPreHook: 6,
+                    nPostHook: 2,
+                    nPages: 2,
+                    nEntries: 2
+                }
+            });
+        });
         it('Using a small timeout should generate an empty HAR object', (done) => {
             checkedRun({
                 done,
