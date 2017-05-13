@@ -10,7 +10,7 @@ const http2 = require('http2');
 
 function runTestSuite(name, protocol, server) {
     const port = 8000;
-    const baseHost = `${protocol}://localhost:${port}`;
+    const baseUrl = `${protocol}://localhost:${port}`;
     before('Start web server', (done) => {
         server.on('request', testServerHandler);
         server.listen(port, done);
@@ -23,7 +23,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/get?a=1&b=2&a=1`
+                    `${baseUrl}/get?a=1&b=2&a=1`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -38,7 +38,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/data?size=${size}`
+                    `${baseUrl}/data?size=${size}`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -64,7 +64,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/data?size=${size}&chunks=${chunks}`
+                    `${baseUrl}/data?size=${size}&chunks=${chunks}`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -89,7 +89,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/data?size=${size}&gzip=true`
+                    `${baseUrl}/data?size=${size}&gzip=true`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -116,7 +116,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/data?size=${size}&chunks=${chunks}&gzip=true`
+                    `${baseUrl}/data?size=${size}&chunks=${chunks}&gzip=true`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -140,7 +140,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/get`
+                    `${baseUrl}/get`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 1, 'entries');
@@ -163,7 +163,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/generate_204`
+                    `${baseUrl}/generate_204`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 2, 'entries');
@@ -188,7 +188,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseHost}/redirect?n=${n}&size=${size}`
+                    `${baseUrl}/redirect?n=${n}&size=${size}`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, n + 1, 'entries');
