@@ -10,7 +10,7 @@ const http2 = require('http2');
 
 function runTestSuite(name, protocol, server) {
     const port = 8000;
-    const baseHost = `${protocol}://localhost:${8000}`;
+    const baseHost = `${protocol}://localhost:${port}`;
     before('Start web server', (done) => {
         server.on('request', testServerHandler);
         server.listen(port, done);
