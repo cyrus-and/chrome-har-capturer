@@ -59,6 +59,22 @@ function runTestSuite(name, protocol, server) {
                 }
             });
         });
+        it('Return the response body', (done) => {
+            const size = 1000000;
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/data?size=${size}`
+                ],
+                options: {
+                    content: true
+                },
+                check: (events, har) => {
+                    assert.strictEqual(har.log.entries.length, 1, 'entries');
+                    assert.strictEqual(har.log.entries[0].response.content.text, Buffer.alloc(size, 'x').toString(), 'content');
+                }
+            });
+        }).timeout(0); // disable for this one
     });
     describe('Sizes', () => {
         it('Properly measure fixed-size responses', (done) => {
