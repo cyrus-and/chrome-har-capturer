@@ -314,7 +314,7 @@ function runTestSuite(name, protocol, server) {
     });
 }
 
-describe('HAR', () => {
+describe('HAR (live)', () => {
     describe('HTTP', () => {
         runTestSuite('http', 'http', http.createServer());
     });
