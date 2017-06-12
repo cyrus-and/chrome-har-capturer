@@ -8,8 +8,8 @@ function run(urls, options = {}) {
     return new Loader(urls, options);
 }
 
-async function fromLog(url, log) {
-    const replay = new Replay(url, log);
+async function fromLog(url, log, options = {}) {
+    const replay = new Replay(url, log, options);
     const stats = await replay.load();
     return HAR.create([stats]);
 }
