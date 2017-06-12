@@ -72,9 +72,9 @@ the list of supported events).
 - `port`: [Chrome Debugging Protocol] port. Defaults to `9222`;
 - `width`: frame width in DIP. Defaults to a Chrome-defined value;
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
-- `content`: If `true` also capture the requests body. Defaults to `false`;
-- `timeout`: Milliseconds to wait before giving up with a URL;
-- `parallel`: If `true` load the URLs in parallel (**warning:** this may spoil
+- `content`: if `true` also capture the requests body. Defaults to `false`;
+- `timeout`: milliseconds to wait before giving up with a URL;
+- `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
 - `preHook`: function returning a Promise executed before each page load:
     - `url`: the current URL;
