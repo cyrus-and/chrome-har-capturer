@@ -5,7 +5,6 @@ Capture HAR files from a [headless] Chrome instance.
 
 Under the hood this module uses [chrome-remote-interface] to instrument Chrome.
 
-[chrome-remote-interface]: https://github.com/cyrus-and/chrome-remote-interface
 [headless]: https://www.chromestatus.com/feature/5678767817097216
 
 ![Screenshot](http://i.imgur.com/HoDaGr3.png)
@@ -101,21 +100,21 @@ the list of supported events).
 
 [CDP client instance]: https://github.com/cyrus-and/chrome-remote-interface#class-cdp
 
-#### Event: 'load'
+##### Event: 'load'
 
     function (url, index, urls) {}
 
 Emitted when Chrome is about to load `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
-#### Event: 'done'
+##### Event: 'done'
 
     function (url, index, urls) {}
 
 Emitted when Chrome finished loading `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
-#### Event: fail'
+##### Event: fail'
 
     function (url, err, index, urls) {}
 
@@ -123,12 +122,47 @@ Emitted when Chrome cannot load `url`. The `Error` object `err` contains the
 failure reason. Failed URLs will not appear in the resulting HAR object. `index`
 is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
-#### Event: 'har'
+##### Event: 'har'
 
     function (har) {}
 
 Emitted when all the URLs have been processed. If all the URLs fails then a
 valid empty HAR object is returned. `har` is the resulting HAR object.
+
+#### fromLog(url, log, [options])
+
+Generate a single-page HAR from an array of raw events that comes from the
+[Chrome Debugging Protocol] (e.g., from [chrome-remote-interface]).
+
+`url` is the page URL;
+
+`log` is the array of events in the form:
+
+```js
+{
+    method: '...',
+    params: {...}
+}
+```
+
+`options` is an object with the following optional properties:
+- `content`: if `true` also expect the requests body. Defaults to `false`.
+
+When `content` is `true` synthetic events in the following form are also
+expected that represents the reply of the [`Network.getResponseBody`] method:
+
+```js
+{
+    method: 'Network.getResponseBody',
+    params: {
+        requestId: '...',
+        body: '...',
+        base64Encoded: true/false
+    }
+}
+```
+
+[`Network.getResponseBody`]: https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-getResponseBody
 
 Resources
 ---------
@@ -137,3 +171,4 @@ Resources
 - [HAR Viewer](http://www.softwareishard.com/blog/har-viewer/)
 
 [Chrome Debugging Protocol]: https://developer.chrome.com/devtools/docs/debugger-protocol
+[chrome-remote-interface]: https://github.com/cyrus-and/chrome-remote-interface
