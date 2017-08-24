@@ -182,6 +182,19 @@ function runTestSuite(name, protocol, server) {
                 }
             });
         });
+        it('Properly measure POST requests', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/generate_post`
+                ],
+                check: (events, har) => {
+                    assert.strictEqual(har.log.entries.length, 2, 'entries');
+                    const {bodySize} = har.log.entries[1].request;
+                    assert.strictEqual(typeof bodySize, 'number', 'bodySize type');
+                }
+            });
+        });
         it('Properly handle redirections', (done) => {
             const n = 5;
             const size = 1000;
