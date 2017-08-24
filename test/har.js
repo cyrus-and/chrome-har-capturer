@@ -182,6 +182,19 @@ function runTestSuite(name, protocol, server) {
                 }
             });
         });
+        it('Properly measure POST requests', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/generate_post`
+                ],
+                check: (events, har) => {
+                    assert.strictEqual(har.log.entries.length, 2, 'entries');
+                    const {bodySize} = har.log.entries[1].request;
+                    assert.strictEqual(typeof bodySize, 'number', 'bodySize type');
+                }
+            });
+        });
         it('Properly handle redirections', (done) => {
             const n = 5;
             const size = 1000;
@@ -193,7 +206,8 @@ function runTestSuite(name, protocol, server) {
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, n + 1, 'entries');
                     for (let i = 0; i < n; i++) {
-                        const {bodySize, headersSize, content, _transferSize} = har.log.entries[i].response;
+                        const {bodySize, headersSize, content, _transferSize, redirectURL} = har.log.entries[i].response;
+                        assert.strictEqual(redirectURL, `/redirect?n=${n - i - 1}&size=${size}`, 'redirectURL');
                         assert.strictEqual(content.size, 0, 'size');
                         if (name === 'http2') {
                             assert.strictEqual(bodySize, -1, 'body size');

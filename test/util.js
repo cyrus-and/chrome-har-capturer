@@ -121,6 +121,17 @@ function testServerHandler(request, response) {
             response.end();
         }
         break;
+    case '/generate_post':
+        {
+            response.setHeader('content-type', 'text/html');
+            response.end('<form id="form" method="POST" action="/post"><input name="name" value="value"/></form><script>form.submit();</script>');
+        }
+        break;
+    case '/post':
+        {
+            response.end();
+        }
+        break;
     case '/generate_204':
         {
             response.setHeader('content-type', 'text/html');
