@@ -15,6 +15,7 @@ program
     .option('-o, --output <file>', 'write to file instead of stdout')
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
+    .option('-i, --insecure', 'ignore certificate errors')
     .option('-g, --grace <ms>', 'time to wait after the load event')
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
     .option('-l, --parallel <n>', 'load <n> URLs in parallel')
@@ -43,7 +44,15 @@ function log(string) {
 }
 
 async function preHook(url, client) {
-    const {Network} = client;
+    const {Network, Security} = client;
+    // optionally ignore certificate errors
+    if (program.insecure) {
+        await Security.enable();
+        await Security.setOverrideCertificateErrors({override: true});
+        Security.certificateError(({eventId}) => {
+            Security.handleCertificateError({eventId, action: 'continue'});
+        });
+    }
     // optionally set user agent
     const userAgent = program.agent;
     if (typeof userAgent === 'string') {
