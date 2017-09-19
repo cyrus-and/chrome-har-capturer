@@ -15,6 +15,7 @@ function checkedRun({done, urls, options = {}, expected, check}) {
     let nPreHook = 0;
     let nPostHook = 0;
     const events = [];
+    options.content = true;
     options.preHook = async (url, client, index, _urls) => {
         // ignore certificate errors (requires Chrome 59) because
         // --ignore-certificate-errors doesn't work in headless mode
@@ -144,6 +145,14 @@ function testServerHandler(request, response) {
             response.end();
         }
         break;
+    case '/generate_404':
+        {
+            response.setHeader('content-type', 'text/html');
+            response.end(`<script src="/404.js">
+                          </script><img src="/404.png"/>
+                          <link rel="stylesheet" href="/404.css">`);
+        }
+        break;
     case '/data':
         {
             const size = Number(urlObject.query.size);
@@ -193,6 +202,11 @@ function testServerHandler(request, response) {
             }
         }
         break;
+    default:
+        {
+            response.writeHead(404);
+            response.end();
+        }
     }
 }
 

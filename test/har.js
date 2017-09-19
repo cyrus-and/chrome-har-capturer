@@ -182,6 +182,38 @@ function runTestSuite(name, protocol, server) {
                 }
             });
         });
+        it('Properly measure not found responses (404)', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/generate_404`
+                ],
+                check: (events, har) => {
+                    // XXX apparently the CSS is requested twice
+                    assert(har.log.entries.length >= 4, 'entries');
+                    for (let i = 1; i < 4; i++) {
+                        const {url} = har.log.entries[i].request;
+                        const {bodySize, headersSize, content, _transferSize} = har.log.entries[i].response;
+                        assert.strictEqual(content.size, 0, 'size');
+                        if (name === 'http2') {
+                            assert.strictEqual(bodySize, -1, 'body size');
+                            assert.strictEqual(content.compression, undefined, 'compression');
+                            // XXX here _transferSize is erroneously 0
+                        } else {
+                            if (url.match(/\.png$/)) {
+                                // loadingFinished
+                                assert(bodySize > 0, 'body size');
+                            } else {
+                                // loadingFailed
+                                assert(bodySize === 0, 'body size');
+                                assert.strictEqual(content.compression, 0, 'compression');
+                            }
+                            assert.strictEqual(_transferSize, bodySize + headersSize, 'transfer size');
+                        }
+                    }
+                }
+            });
+        });
         it('Properly measure POST requests', (done) => {
             checkedRun({
                 done,
