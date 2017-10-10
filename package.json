@@ -1,39 +1,74 @@
 {
+  "_from": "chrome-har-capturer",
+  "_id": "chrome-har-capturer@0.10.3",
+  "_inBundle": false,
+  "_integrity": "sha512-wV9x1/KAoT6I/uf7REhUo1f4lqxvmbDR0FfunaI8eQH45vEd6r1HguNOlF/6Txgzp7Q172L7oRykZq9/d6uPOw==",
+  "_location": "/chrome-har-capturer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "chrome-har-capturer",
     "name": "chrome-har-capturer",
-    "author": "Andrea Cardaci <cyrus.and@gmail.com>",
-    "license": "MIT",
-    "description": "Capture HAR files from a headless Chrome instance",
-    "keywords": ["har", "chrome", "debug", "protocol", "headless"],
-    "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
-    "version": "0.10.3",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
-    },
-    "bugs" : {
-        "url" : "http://github.com/cyrus-and/chrome-har-capturer/issues"
-    },
-    "bin": {
-        "chrome-har-capturer": "./bin/cli.js"
-    },
-    "files": [
-        "bin",
-        "lib",
-        "index.js"
-    ],
-    "scripts": {
-        "pretest": "eslint .",
-        "test": "mocha --no-exit"
-    },
-    "dependencies": {
-        "chrome-remote-interface": ">=0.23.0",
-        "commander": "2.x.x",
-        "chalk": "1.x.x"
-    },
-    "devDependencies": {
-        "eslint": "3.x.x",
-        "mocha": "3.x.x",
-        "har-validator": "5.x.x",
-        "http2": "3.x.x"
-    }
+    "escapedName": "chrome-har-capturer",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/chrome-har-capturer/-/chrome-har-capturer-0.10.3.tgz",
+  "_shasum": "b10eeb2381cb3fd9d0f5422d62ac67c10b1587ab",
+  "_spec": "chrome-har-capturer",
+  "_where": "C:\\WebApps\\911 - CoreTester",
+  "author": {
+    "name": "Andrea Cardaci",
+    "email": "cyrus.and@gmail.com"
+  },
+  "bin": {
+    "chrome-har-capturer": "./bin/cli.js"
+  },
+  "bugs": {
+    "url": "http://github.com/cyrus-and/chrome-har-capturer/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "chalk": "1.x.x",
+    "chrome-remote-interface": ">=0.23.0",
+    "commander": "2.x.x"
+  },
+  "deprecated": false,
+  "description": "Capture HAR files from a headless Chrome instance",
+  "devDependencies": {
+    "eslint": "3.x.x",
+    "har-validator": "5.x.x",
+    "http2": "3.x.x",
+    "mocha": "3.x.x"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
+  "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
+  "keywords": [
+    "har",
+    "chrome",
+    "debug",
+    "protocol",
+    "headless"
+  ],
+  "license": "MIT",
+  "name": "chrome-har-capturer",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
+  },
+  "scripts": {
+    "pretest": "eslint .",
+    "test": "mocha --no-exit"
+  },
+  "version": "0.10.3"
 }
