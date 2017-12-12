@@ -6,7 +6,7 @@ const assert = require('assert');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const http2 = require('http2');
+const http2 = require('../node_modules/http2');
 
 function runTestSuite(name, protocol, server) {
     const port = 8000;
