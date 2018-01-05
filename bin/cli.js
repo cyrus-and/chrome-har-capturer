@@ -6,6 +6,11 @@ const program = require('commander');
 
 const CHC = require('..');
 
+function append(value, array) {
+    array.push(value);
+    return array;
+}
+
 program
     .usage('[options] URL...')
     .option('-t, --host <host>', 'Chrome Debugging Protocol host')
@@ -15,8 +20,8 @@ program
     .option('-o, --output <file>', 'write to file instead of stdout')
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
-    .option('-b, --block <URL>', 'URL pattern (*) to block (can be repeated)',
-            (value, array) => { array.push(value); return array; }, [])
+    .option('-b, --block <URL>', 'URL pattern (*) to block (can be repeated)', append, [])
+    .option('-H, --header <header>', 'Additional headers (can be repeated)', append, [])
     .option('-i, --insecure', 'ignore certificate errors')
     .option('-g, --grace <ms>', 'time to wait after the load event')
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
@@ -63,6 +68,19 @@ async function preHook(url, client) {
     // optionally block URLs
     if (program.block) {
         await Network.setBlockedURLs({urls: program.block});
+    }
+    // optionally add extra headers
+    if (program.header) {
+        const headers = {};
+        // convert to object
+        program.header.forEach((header) => {
+            const match = header.match(/([^:]+): *(.*)/);
+            if (match) {
+                const [_, name, value] = match;
+                headers[name] = value;
+            }
+        });
+        await Network.setExtraHTTPHeaders({headers});
     }
 }
 
