@@ -44,6 +44,7 @@ URLs. The following options are available:
     -o, --output <file>  write to file instead of stdout
     -c, --content        also capture the requests body
     -a, --agent <agent>  user agent override
+    -b, --block <URL>    URL pattern (*) to block (can be repeated)
     -i, --insecure       ignore certificate errors
     -g, --grace <ms>     time to wait after the load event
     -u, --timeout <ms>   time to wait before giving up the URL

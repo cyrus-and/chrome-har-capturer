@@ -15,6 +15,8 @@ program
     .option('-o, --output <file>', 'write to file instead of stdout')
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
+    .option('-b, --block <URL>', 'URL pattern (*) to block (can be repeated)',
+            (value, array) => { array.push(value); return array; }, [])
     .option('-i, --insecure', 'ignore certificate errors')
     .option('-g, --grace <ms>', 'time to wait after the load event')
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
@@ -57,6 +59,10 @@ async function preHook(url, client) {
     const userAgent = program.agent;
     if (typeof userAgent === 'string') {
         await Network.setUserAgentOverride({userAgent});
+    }
+    // optionally block URLs
+    if (program.block) {
+        await Network.setBlockedURLs({urls: program.block});
     }
 }
 
