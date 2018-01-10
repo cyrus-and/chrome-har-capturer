@@ -42,6 +42,8 @@ URLs. The following options are available:
     -x, --width <dip>      frame width in DIP
     -y, --height <dip>     frame height in DIP
     -o, --output <file>    write to file instead of stdout
+    -r, --retry <number>   number of retries on page load failure (default: 0)
+    -n, --retryTimeout <ms> time to wait before new try (default: 5000)
     -c, --content          also capture the requests body
     -a, --agent <agent>    user agent override
     -b, --block <URL>      URL pattern (*) to block (can be repeated)
@@ -75,6 +77,8 @@ the list of supported events).
 - `port`: [Chrome Debugging Protocol] port. Defaults to `9222`;
 - `width`: frame width in DIP. Defaults to a Chrome-defined value;
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
+- `retry`: number of retries on page load failure. Defaults to `0`;
+- `retryTimeout`: time to wait before new try. Defaults to `5000` ms;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
