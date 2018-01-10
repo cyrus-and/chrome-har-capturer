@@ -124,6 +124,17 @@ is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 Emitted when all the URLs have been processed. If all the URLs fails then a
 valid empty HAR object is returned. `har` is the resulting HAR object.
 
+Development (using [Docker compose](https://docs.docker.com/compose/))
+---------
+
+- `docker-compose up -d` - run docker container named 'chrome-har-capturer' with
+chrome headless running inside and node v8.9.4 and npm v5.6.0 preinstalled
+- `docker-compose exec app npm test` - run tests inside the container
+- `docker-compose exec app node ./bin/cli.js` - run command line utility that
+displays help
+- `docker-compose exec app <command>` - execute any command in project root
+- `docker-compose exec app bash` - run interactive shell inside project root
+
 Resources
 ---------
 

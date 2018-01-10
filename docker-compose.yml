@@ -1,0 +1,17 @@
+version: "3.2"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./bin:/app/bin
+      - ./lib:/app/lib
+      - ./test:/app/test
+    environment:
+      - NODE_ENV=development
+    container_name: chrome-har-capturer
+    # command:  while true; do echo 'Hit CTRL+C'; sleep 1; done
+    # command: bash
