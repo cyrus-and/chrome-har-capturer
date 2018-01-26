@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
     restart: unless-stopped
     volumes:
       - ./bin:/app/bin
@@ -13,5 +13,3 @@ services:
     environment:
       - NODE_ENV=development
     container_name: chrome-har-capturer
-    # command:  while true; do echo 'Hit CTRL+C'; sleep 1; done
-    # command: bash

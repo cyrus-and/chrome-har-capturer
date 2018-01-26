@@ -9,9 +9,14 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN apt-get update && apt-get install -y curl vim nano && \
     curl https://raw.githubusercontent.com/creationix/nvm/$NVM_VERSION/install.sh | bash && \
     . $NVM_DIR/nvm.sh && \
-    nvm install $NODE_VERSION && \
-    npm install -g chrome-har-capturer
+    nvm install $NODE_VERSION
 
-COPY ./start.sh /
+WORKDIR /app
 
-ENTRYPOINT ["/start.sh"]
+COPY package* /app/
+
+RUN npm install
+
+COPY ./ /app
+
+VOLUME ["/app/bin/", "/app/lib/", "/app/test/"]

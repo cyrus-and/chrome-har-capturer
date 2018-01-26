@@ -135,6 +135,14 @@ displays help
 - `docker-compose exec app <command>` - execute any command in project root
 - `docker-compose exec app bash` - run interactive shell inside project root
 
+Build Docker Image locally and use it
+---------
+- `docker build -t chrome-har-capturer .` - build docker image using latest chrome-har-capturer
+- `docker run --rm chrome-har-capturer` - show help
+- `docker run --rm chrome-har-capturer https://google.com` - check single site
+- `cat urls.txt | docker run -i --rm chrome-har-capturer > urls.har.json` - run against
+URLS inside urls.txt file and save results to urls.har.json file
+
 Resources
 ---------
 
