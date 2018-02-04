@@ -145,6 +145,17 @@ Generate a single-page HAR from an array of raw events that comes from the
 }
 ```
 
+Events to be provided are:
+
+- `Page.domContentEventFired`;
+- `Page.loadEventFired`;
+- `Network.requestWillBeSent`;
+- `Network.dataReceived`;
+- `Network.responseReceived`;
+- `Network.resourceChangedPriority`;
+- `Network.loadingFinished`;
+- `Network.loadingFailed`.
+
 `options` is an object with the following optional properties:
 - `content`: if `true` also expect the requests body. Defaults to `false`.
 
