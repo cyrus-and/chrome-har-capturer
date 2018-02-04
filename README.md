@@ -160,7 +160,7 @@ Events to be provided are:
 - `content`: if `true` also expect the requests body. Defaults to `false`.
 
 When `content` is `true` synthetic events in the following form are also
-expected that represents the reply of the [`Network.getResponseBody`] method:
+expected that represent the reply of the [`Network.getResponseBody`] method:
 
 ```js
 {
