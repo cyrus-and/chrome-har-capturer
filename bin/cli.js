@@ -78,7 +78,7 @@ async function preHook(url, client) {
         program.header.forEach((header) => {
             const match = header.match(/([^:]+): *(.*)/);
             if (match) {
-                const [name, value] = match;
+                const [, name, value] = match;
                 headers[name] = value;
             }
         });
