@@ -18,6 +18,8 @@ program
     .option('-x, --width <dip>', 'frame width in DIP')
     .option('-y, --height <dip>', 'frame height in DIP')
     .option('-o, --output <file>', 'write to file instead of stdout')
+    .option('-r, --retry <number>', 'number of retries on page load failure', Number, 0)
+    .option('-n, --retryTimeout <ms>', 'time to wait before new try', Number, 5000)
     .option('-c, --content', 'also capture the requests body')
     .option('-a, --agent <agent>', 'user agent override')
     .option('-b, --block <URL>', 'URL pattern (*) to block (can be repeated)', append, [])
@@ -91,10 +93,11 @@ function postHook(url, client) {
     });
 }
 
-const {host, port, width, height, content, timeout, parallel} = program;
+const {host, port, width, height, retry, retryTimeout, content, timeout, parallel} = program;
 CHC.run(program.args, {
     host, port,
     width, height,
+    retry, retryTimeout,
     content,
     timeout,
     parallel,

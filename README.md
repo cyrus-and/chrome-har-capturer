@@ -42,6 +42,8 @@ URLs. The following options are available:
     -x, --width <dip>      frame width in DIP
     -y, --height <dip>     frame height in DIP
     -o, --output <file>    write to file instead of stdout
+    -r, --retry <number>   number of retries on page load failure (default: 0)
+    -n, --retryTimeout <ms> time to wait before new try (default: 5000)
     -c, --content          also capture the requests body
     -a, --agent <agent>    user agent override
     -b, --block <URL>      URL pattern (*) to block (can be repeated)
@@ -75,6 +77,8 @@ the list of supported events).
 - `port`: [Chrome Debugging Protocol] port. Defaults to `9222`;
 - `width`: frame width in DIP. Defaults to a Chrome-defined value;
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
+- `retry`: number of retries on page load failure. Defaults to `0`;
+- `retryTimeout`: time to wait before new try. Defaults to `5000` ms;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
@@ -123,6 +127,25 @@ is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 Emitted when all the URLs have been processed. If all the URLs fails then a
 valid empty HAR object is returned. `har` is the resulting HAR object.
+
+Development (using [Docker compose](https://docs.docker.com/compose/))
+---------
+
+- `docker-compose up -d` - run docker container named 'chrome-har-capturer' with
+chrome headless running inside and node v8.9.4 and npm v5.6.0 preinstalled
+- `docker-compose exec app npm test` - run tests inside the container
+- `docker-compose exec app node ./bin/cli.js` - run command line utility that
+displays help
+- `docker-compose exec app <command>` - execute any command in project root
+- `docker-compose exec app bash` - run interactive shell inside project root
+
+Build Docker Image locally and use it
+---------
+- `docker build -t chrome-har-capturer .` - build docker image using latest chrome-har-capturer
+- `docker run --rm chrome-har-capturer` - show help
+- `docker run --rm chrome-har-capturer https://google.com` - check single site
+- `cat urls.txt | docker run -i --rm chrome-har-capturer > urls.har.json` - run against
+URLS inside urls.txt file and save results to urls.har.json file
 
 Resources
 ---------
