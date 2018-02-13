@@ -36,20 +36,21 @@ Command line utility
 The command line utility can be used to generate HAR files from a list of
 URLs. The following options are available:
 
-    -h, --help             output usage information
-    -t, --host <host>      Chrome Debugging Protocol host
-    -p, --port <port>      Chrome Debugging Protocol port
-    -x, --width <dip>      frame width in DIP
-    -y, --height <dip>     frame height in DIP
-    -o, --output <file>    write to file instead of stdout
-    -c, --content          also capture the requests body
-    -a, --agent <agent>    user agent override
-    -b, --block <URL>      URL pattern (*) to block (can be repeated)
-    -H, --header <header>  Additional headers (can be repeated)
-    -i, --insecure         ignore certificate errors
-    -g, --grace <ms>       time to wait after the load event
-    -u, --timeout <ms>     time to wait before giving up with a URL
-    -l, --parallel <n>     load <n> URLs in parallel
+    -h, --help               output usage information
+    -t, --host <host>        Chrome Debugging Protocol host
+    -p, --port <port>        Chrome Debugging Protocol port
+    -x, --width <dip>        frame width in DIP
+    -y, --height <dip>       frame height in DIP
+    -o, --output <file>      write to file instead of stdout
+    -c, --content            also capture the requests body
+    -a, --agent <agent>      user agent override
+    -b, --block <URL>        URL pattern (*) to block (can be repeated)
+    -H, --header <header>    Additional headers (can be repeated)
+    -i, --insecure           ignore certificate errors
+    -g, --grace <ms>         time to wait after the load event
+    -u, --timeout <ms>       time to wait before giving up with a URL
+    -d, --post-data <bytes>  maximum POST data size to be returned
+    -l, --parallel <n>       load <n> URLs in parallel
 
 Library
 -------
@@ -77,6 +78,7 @@ the list of supported events).
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
+- `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
 - `preHook`: function returning a Promise executed before each page load:
