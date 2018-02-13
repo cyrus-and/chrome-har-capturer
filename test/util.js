@@ -124,8 +124,9 @@ function testServerHandler(request, response) {
         break;
     case '/generate_post':
         {
+            const type = urlObject.query.type;
             response.setHeader('content-type', 'text/html');
-            response.end('<form id="form" method="POST" action="/post"><input name="name" value="value"/></form><script>form.submit();</script>');
+            response.end(`<form id="form" method="POST" action="/post" enctype="${type}"><input name="name" value="value"/></form><script>form.submit();</script>`);
         }
         break;
     case '/post':

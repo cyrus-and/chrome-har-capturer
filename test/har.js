@@ -31,6 +31,34 @@ function runTestSuite(name, protocol, server) {
                 }
             });
         });
+        it('Parse application/x-www-form-urlencoded POST', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/generate_post?type=application/x-www-form-urlencode`
+                ],
+                check: (events, har) => {
+                    assert.strictEqual(har.log.entries.length, 2, 'entries');
+                    const {postData} = har.log.entries[1].request;
+                    assert.strictEqual(postData.mimeType, 'application/x-www-form-urlencoded', 'mimeType');
+                    assert.deepEqual(postData.params, [{name: 'name', value: 'value'}], 'params');
+                }
+            });
+        });
+        it('Parse multipart/form-data POST', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    `${baseUrl}/generate_post?type=multipart/form-data`
+                ],
+                check: (events, har) => {
+                    assert.strictEqual(har.log.entries.length, 2, 'entries');
+                    const {postData} = har.log.entries[1].request;
+                    assert(postData.mimeType.startsWith('multipart/form-data', 'mimeType'));
+                    assert.deepEqual(postData.params, [], 'params');
+                }
+            });
+        });
     });
     describe('Sizes', () => {
         it('Properly measure fixed-size responses', (done) => {
@@ -218,7 +246,7 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseUrl}/generate_post`
+                    `${baseUrl}/generate_post?type=application/x-www-form-urlencoded`
                 ],
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 2, 'entries');
