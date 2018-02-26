@@ -132,7 +132,8 @@ valid empty HAR object is returned. `har` is the resulting HAR object.
 #### fromLog(url, log, [options])
 
 Generate a single-page HAR from an array of raw events that comes from the
-[Chrome Debugging Protocol] (e.g., from [chrome-remote-interface]).
+[Chrome Debugging Protocol] (e.g., from [chrome-remote-interface]). Returns a
+Promise that fulfills to the generated HAR.
 
 `url` is the page URL;
 
