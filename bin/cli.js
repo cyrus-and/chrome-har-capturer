@@ -25,6 +25,8 @@ program
     .option('-i, --insecure', 'ignore certificate errors')
     .option('-g, --grace <ms>', 'time to wait after the load event')
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
+    .option('-r, --retry <number>', 'number of retries on page load failure')
+    .option('-e, --retry-delay <ms>', 'time to wait before starting a new attempt')
     .option('-d, --post-data <bytes>', 'maximum POST data size to be returned')
     .option('-l, --parallel <n>', 'load <n> URLs in parallel')
     .parse(process.argv);
@@ -92,12 +94,13 @@ function postHook(url, client) {
     });
 }
 
-const {host, port, width, height, content, timeout, postData, parallel} = program;
+const {host, port, width, height, content, timeout, retry, retryDelay, postData, parallel} = program;
 CHC.run(program.args, {
     host, port,
     width, height,
     content,
     timeout,
+    retry, retryDelay,
     postData,
     parallel,
     preHook, postHook

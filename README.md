@@ -49,6 +49,8 @@ URLs. The following options are available:
     -i, --insecure           ignore certificate errors
     -g, --grace <ms>         time to wait after the load event
     -u, --timeout <ms>       time to wait before giving up with a URL
+    -r, --retry <number>     number of retries on page load failure
+    -e, --retry-delay <ms>   time to wait before starting a new attempt
     -d, --post-data <bytes>  maximum POST data size to be returned
     -l, --parallel <n>       load <n> URLs in parallel
 
@@ -78,6 +80,8 @@ the list of supported events).
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
+- `retry`: number of retries on page load failure. Defaults to `0`;
+- `retry-delay`: time to wait before starting a new attempt. Defaults to `0`;
 - `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
