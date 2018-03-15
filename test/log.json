@@ -1,0 +1,146 @@
+[
+    {
+        "method": "Page.frameStartedLoading",
+        "params": {
+            "frameId": "25326.1"
+        }
+    },
+    {
+        "method": "Network.requestWillBeSent",
+        "params": {
+            "requestId": "25326.1",
+            "frameId": "25326.1",
+            "loaderId": "25326.1",
+            "documentURL": "http://localhost:8000/data?size=1000",
+            "request": {
+                "url": "http://localhost:8000/data?size=1000",
+                "method": "GET",
+                "headers": {
+                    "Upgrade-Insecure-Requests": "1",
+                    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML,like Gecko) HeadlessChrome/60.0.3112.24 Safari/537.36"
+                },
+                "mixedContentType": "none",
+                "initialPriority": "VeryHigh",
+                "referrerPolicy": "no-referrer-when-downgrade"
+            },
+            "timestamp": 19435.457861,
+            "wallTime": 1497281285.57171,
+            "initiator": {
+                "type": "other"
+            },
+            "type": "Document"
+        }
+    },
+    {
+        "method": "Network.responseReceived",
+        "params": {
+            "requestId": "25326.1",
+            "frameId": "25326.1",
+            "loaderId": "25326.1",
+            "timestamp": 19438.810237,
+            "type": "Document",
+            "response": {
+                "url": "http://localhost:8000/data?size=1000",
+                "status": 200,
+                "statusText": "OK",
+                "headers": {
+                    "Connection": "keep-alive",
+                    "Date": "Mon, 12 Jun 2017 15:28:08 GMT",
+                    "Content-Length": "1000"
+                },
+                "mimeType": "text/plain",
+                "connectionReused": false,
+                "connectionId": 7,
+                "remoteIPAddress": "[::1]",
+                "remotePort": 8000,
+                "fromDiskCache": false,
+                "fromServiceWorker": false,
+                "encodedDataLength": 102,
+                "timing": {
+                    "requestTime": 19435.458403,
+                    "proxyStart": -1,
+                    "proxyEnd": -1,
+                    "dnsStart": 0.124999998661224,
+                    "dnsEnd": 0.201999999262625,
+                    "connectStart": 0.201999999262625,
+                    "connectEnd": 0.318999998853542,
+                    "sslStart": -1,
+                    "sslEnd": -1,
+                    "workerStart": -1,
+                    "workerReady": -1,
+                    "sendStart": 0.37499999962165,
+                    "sendEnd": 0.405999999202322,
+                    "pushStart": 0,
+                    "pushEnd": 0,
+                    "receiveHeadersEnd": 3350.5640000003
+                },
+                "protocol": "http/1.1",
+                "securityState": "neutral"
+            }
+        }
+    },
+    {
+        "method": "Network.dataReceived",
+        "params": {
+            "requestId": "25326.1",
+            "timestamp": 19438.810497,
+            "dataLength": 1000,
+            "encodedDataLength": 0
+        }
+    },
+    {
+        "method": "Page.frameNavigated",
+        "params": {
+            "frame": {
+                "id": "25326.1",
+                "loaderId": "25326.1",
+                "url": "http://localhost:8000/data?size=1000",
+                "securityOrigin": "http://localhost:8000",
+                "mimeType": "text/plain"
+            }
+        }
+    },
+    {
+        "method": "Network.dataReceived",
+        "params": {
+            "requestId": "25326.1",
+            "timestamp": 19438.812575,
+            "dataLength": 0,
+            "encodedDataLength": 1000
+        }
+    },
+    {
+        "method": "Network.loadingFinished",
+        "params": {
+            "requestId": "25326.1",
+            "timestamp": 19438.809949,
+            "encodedDataLength": 1102
+        }
+    },
+    {
+        "method": "Page.loadEventFired",
+        "params": {
+            "timestamp": 19438.814832
+        }
+    },
+    {
+        "method": "Page.frameStoppedLoading",
+        "params": {
+            "frameId": "25326.1"
+        }
+    },
+    {
+        "method": "Page.domContentEventFired",
+        "params": {
+            "timestamp": 19438.821842
+        }
+    },
+    {
+        "method": "Network.getResponseBody",
+        "params": {
+            "requestId": "25326.1",
+            "body": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "base64Encoded": false
+        }
+    }
+]
