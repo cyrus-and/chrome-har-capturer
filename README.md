@@ -42,6 +42,7 @@ URLs. The following options are available:
     -y, --height <dip>       frame height in DIP
     -o, --output <file>      write to file instead of stdout
     -c, --content            also capture the requests body
+    -k, --cache              allow caching
     -a, --agent <agent>      user agent override
     -b, --block <URL>        URL pattern (*) to block (can be repeated)
     -H, --header <header>    Additional headers (can be repeated)
@@ -78,6 +79,7 @@ the list of supported events).
 - `width`: frame width in DIP. Defaults to a Chrome-defined value;
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
+- `cache`: if `true` allow caching. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `retry`: number of retries on page load failure. Defaults to `0`;
 - `retry-delay`: time to wait before starting a new attempt. Defaults to `0`;

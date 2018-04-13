@@ -19,6 +19,7 @@ program
     .option('-y, --height <dip>', 'frame height in DIP')
     .option('-o, --output <file>', 'write to file instead of stdout')
     .option('-c, --content', 'also capture the requests body')
+    .option('-k, --cache', 'allow caching')
     .option('-a, --agent <agent>', 'user agent override')
     .option('-b, --block <URL>', 'URL pattern (*) to block (can be repeated)', append, [])
     .option('-H, --header <header>', 'Additional headers (can be repeated)', append, [])
@@ -94,11 +95,12 @@ function postHook(url, client) {
     });
 }
 
-const {host, port, width, height, content, timeout, retry, retryDelay, postData, parallel} = program;
+const {host, port, width, height, content, cache, timeout, retry, retryDelay, postData, parallel} = program;
 CHC.run(program.args, {
     host, port,
     width, height,
     content,
+    cache,
     timeout,
     retry, retryDelay,
     postData,
