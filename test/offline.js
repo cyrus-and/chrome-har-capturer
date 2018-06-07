@@ -21,4 +21,14 @@ describe('HAR (offline)', () => {
             return validate.har(har);
         });
     });
+    it('Parse event log with incomplete content', async () => {
+        const incompleteLog = log.filter(({method}) => method !== 'Network.getResponseBody');
+        return CHC.fromLog('http://someurl', incompleteLog, {
+            content: true
+        }).then((har) => {
+            return false;
+        }).catch((err) => {
+            return true;
+        });
+    });
 });
