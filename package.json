@@ -29,7 +29,7 @@
     ],
     "scripts": {
         "pretest": "eslint .",
-        "test": "mocha --no-exit"
+        "test": "mocha"
     },
     "dependencies": {
         "chrome-remote-interface": ">=0.23.0",
@@ -38,7 +38,7 @@
     },
     "devDependencies": {
         "eslint": "3.x.x",
-        "mocha": "3.x.x",
+        "mocha": "5.x.x",
         "har-validator": "5.x.x",
         "http2": "3.x.x"
     }
