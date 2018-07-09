@@ -71,6 +71,11 @@ function checkedRun({done, urls, options = {}, expected, check}) {
             done(err);
         }
     }).on('fail', (url, err, index, _urls) => {
+        // do not swallow unexpected errors
+        if (!expected) {
+            console.log(err);
+        }
+
         nFail++;
         try {
             assert.strictEqual(typeof url, 'string');
