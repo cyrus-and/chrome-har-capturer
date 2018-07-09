@@ -8,7 +8,7 @@ const assert = require('assert');
 const url = require('url');
 const zlib = require('zlib');
 
-function checkedRun({done, urls, options = {}, expected, check}) {
+function checkedRun({done, urls, options = {}, graceTime = 0, expected, check}) {
     let nLoad = 0;
     let nDone = 0;
     let nFail = 0;
@@ -48,6 +48,8 @@ function checkedRun({done, urls, options = {}, expected, check}) {
         } catch (err) {
             done(err);
         }
+
+        return new Promise((fulfill) => setTimeout(fulfill, graceTime));
     };
     CHC.run(
         urls,
@@ -129,9 +131,9 @@ function testServerHandler(request, response) {
         break;
     case '/generate_post':
         {
-            const type = urlObject.query.type;
+            const {type, graceTime} = urlObject.query;
             response.setHeader('content-type', 'text/html');
-            response.end(`<form id="form" method="POST" action="/post" enctype="${type}"><input name="name" value="value"/></form><script>form.submit();</script>`);
+            response.end(`<form id="form" method="POST" action="/post" enctype="${type}"><input name="name" value="value"/></form><script>setTimeout(() => { form.submit(); }, ${graceTime})</script>`);
         }
         break;
     case '/post':

@@ -35,8 +35,9 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseUrl}/generate_post?type=application/x-www-form-urlencode`
+                    `${baseUrl}/generate_post?type=application/x-www-form-urlencode&graceTime=500`
                 ],
+                graceTime: 1000,
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 2, 'entries');
                     const {postData} = har.log.entries[1].request;
@@ -49,8 +50,9 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseUrl}/generate_post?type=multipart/form-data`
+                    `${baseUrl}/generate_post?type=multipart/form-data&graceTime=500`
                 ],
+                graceTime: 1000,
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 2, 'entries');
                     const {postData} = har.log.entries[1].request;
@@ -262,8 +264,9 @@ function runTestSuite(name, protocol, server) {
             checkedRun({
                 done,
                 urls: [
-                    `${baseUrl}/generate_post?type=application/x-www-form-urlencoded`
+                    `${baseUrl}/generate_post?type=application/x-www-form-urlencoded&graceTime=500`
                 ],
+                graceTime: 1000,
                 check: (events, har) => {
                     assert.strictEqual(har.log.entries.length, 2, 'entries');
                     const {bodySize} = har.log.entries[1].request;
