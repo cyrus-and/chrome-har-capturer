@@ -29,7 +29,7 @@
     ],
     "scripts": {
         "pretest": "eslint .",
-        "test": "mocha"
+        "test": "mocha -t 10000"
     },
     "dependencies": {
         "chalk": "1.x.x",
