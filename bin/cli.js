@@ -125,8 +125,8 @@ CHC.run(program.args, {
     const fs = require('fs');
     const json = JSON.stringify(har, null, 4);
     const output = program.output
-          ? fs.createWriteStream(program.output)
-          : process.stdout;
+        ? fs.createWriteStream(program.output)
+        : process.stdout;
     output.write(json);
     output.write('\n');
 });

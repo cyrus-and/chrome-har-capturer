@@ -211,10 +211,10 @@ function testServerHandler(request, response) {
         }
         break;
     default:
-        {
-            response.writeHead(404);
-            response.end();
-        }
+    {
+        response.writeHead(404);
+        response.end();
+    }
     }
 }
 
