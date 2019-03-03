@@ -98,7 +98,7 @@ function postHook(url, client) {
 const {host, port, width, height, content, cache, timeout, retry, retryDelay, postData, parallel} = program;
 CHC.run(program.args, {
     host, port,
-    width, height,
+    width: parseInt(width, 10), height: parseInt(height, 10),
     content,
     cache,
     timeout,
