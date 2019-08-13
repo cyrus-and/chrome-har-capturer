@@ -1,5 +1,7 @@
-chrome-har-capturer    [![Build Status](https://travis-ci.org/cyrus-and/chrome-har-capturer.svg?branch=master)](https://travis-ci.org/cyrus-and/chrome-har-capturer)
-===================
+# chrome-har-capturer [![Build Status][]][travis]
+
+[Build Status]: https://travis-ci.org/cyrus-and/chrome-har-capturer.svg?branch=master
+[travis]: https://travis-ci.org/cyrus-and/chrome-har-capturer
 
 Capture HAR files from a [headless] Chrome instance.
 
@@ -9,8 +11,7 @@ Under the hood this module uses [chrome-remote-interface] to instrument Chrome.
 
 ![Screenshot](http://i.imgur.com/HoDaGr3.png)
 
-Setup
------
+## Setup
 
 Install this module from NPM:
 
@@ -29,8 +30,7 @@ anymore.
 
 [0.9.5]: https://github.com/cyrus-and/chrome-har-capturer/releases/tag/v0.9.5
 
-Command line utility
---------------------
+## Command line utility
 
 The command line utility can be used to generate HAR files from a list of
 URLs. The following options are available:
@@ -54,8 +54,7 @@ URLs. The following options are available:
     -d, --post-data <bytes>  maximum POST data size to be returned
     -l, --parallel <n>       load <n> URLs in parallel
 
-Library
--------
+## Library
 
 Alternatively this module provides a simple [API](#api) that can be used to
 write custom applications. See the command line utility [source code] for a
@@ -104,21 +103,27 @@ the list of supported events).
 
 ##### Event: 'load'
 
-    function (url, index, urls) {}
+```js
+function (url, index, urls) {}
+```
 
 Emitted when Chrome is about to load `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: 'done'
 
-    function (url, index, urls) {}
+```js
+function (url, index, urls) {}
+```
 
 Emitted when Chrome finished loading `url`. `index` is the index of `url` in
 `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: fail'
 
-    function (url, err, index, urls) {}
+```js
+function (url, err, index, urls) {}
+```
 
 Emitted when Chrome cannot load `url`. The `Error` object `err` contains the
 failure reason. Failed URLs will not appear in the resulting HAR object. `index`
@@ -126,7 +131,9 @@ is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: 'har'
 
-    function (har) {}
+```js
+function (har) {}
+```
 
 Emitted when all the URLs have been processed. If all the URLs fails then a
 valid empty HAR object is returned. `har` is the resulting HAR object.
@@ -178,8 +185,7 @@ expected that represent the reply of the [`Network.getResponseBody`] method:
 
 [`Network.getResponseBody`]: https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-getResponseBody
 
-Resources
----------
+## Resources
 
 - [HAR 1.2 Spec](http://www.softwareishard.com/blog/har-12-spec/)
 - [HAR Viewer](http://www.softwareishard.com/blog/har-viewer/)
