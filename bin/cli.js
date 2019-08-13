@@ -28,6 +28,7 @@ program
     .option('-u, --timeout <ms>', 'time to wait before giving up with a URL')
     .option('-r, --retry <number>', 'number of retries on page load failure')
     .option('-e, --retry-delay <ms>', 'time to wait before starting a new attempt')
+    .option('-f, --abort-on-failure', 'stop after the first failure (incompatible with parallel mode)')
     .option('-d, --post-data <bytes>', 'maximum POST data size to be returned')
     .option('-l, --parallel <n>', 'load <n> URLs in parallel')
     .parse(process.argv);
@@ -95,7 +96,7 @@ function postHook(url, client) {
     });
 }
 
-const {host, port, width, height, content, cache, timeout, retry, retryDelay, postData, parallel} = program;
+const {host, port, width, height, content, cache, timeout, retry, retryDelay, abortOnFailure, postData, parallel} = program;
 CHC.run(program.args, {
     host, port,
     width, height,
@@ -103,6 +104,7 @@ CHC.run(program.args, {
     cache,
     timeout,
     retry, retryDelay,
+    abortOnFailure,
     postData,
     parallel,
     preHook, postHook

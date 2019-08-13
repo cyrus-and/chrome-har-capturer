@@ -187,6 +187,32 @@ function runTestSuite(parallel) {
                 }
             });
         });
+        it('Abort on failure should work for sequential mode only', (done) => {
+            checkedRun({
+                done,
+                urls: [
+                    'http://localhost:9222/json/version',
+                    'a',
+                    'b',
+                    'c',
+                    'd',
+                    'http://localhost:9222/json/version',
+                ],
+                options: {
+                    parallel,
+                    abortOnFailure: true,
+                },
+                expected: {
+                    nLoad: parallel ? 6 : 2,
+                    nDone: parallel ? 2 : 1,
+                    nFail: parallel ? 4 : 1,
+                    nPreHook: parallel ? 6 : 2,
+                    nPostHook: parallel ? 2 : 1,
+                    nPages: parallel ? 2 : 1,
+                    nEntries: parallel ? 2 : 1
+                }
+            });
+        });
     });
 }
 

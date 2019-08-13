@@ -82,6 +82,7 @@ the list of supported events).
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `retry`: number of retries on page load failure. Defaults to `0`;
 - `retryDelay`: time to wait before starting a new attempt. Defaults to `0`;
+- `abortOnfailure`: stop after the first failure (incompatible with parallel mode);
 - `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
