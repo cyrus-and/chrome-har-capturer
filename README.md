@@ -81,7 +81,7 @@ the list of supported events).
 - `cache`: if `true` allow caching. Defaults to `false`;
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `retry`: number of retries on page load failure. Defaults to `0`;
-- `retry-delay`: time to wait before starting a new attempt. Defaults to `0`;
+- `retryDelay`: time to wait before starting a new attempt. Defaults to `0`;
 - `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
