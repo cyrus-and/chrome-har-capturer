@@ -3,11 +3,9 @@
 [Build Status]: https://travis-ci.org/cyrus-and/chrome-har-capturer.svg?branch=master
 [travis]: https://travis-ci.org/cyrus-and/chrome-har-capturer
 
-Capture HAR files from a [headless] Chrome instance.
+Capture HAR files from a Chrome instance.
 
 Under the hood this module uses [chrome-remote-interface] to instrument Chrome.
-
-[headless]: https://www.chromestatus.com/feature/5678767817097216
 
 ![Screenshot](http://i.imgur.com/HoDaGr3.png)
 
@@ -20,15 +18,6 @@ Install this module from NPM:
 Start Chrome like this:
 
     google-chrome --remote-debugging-port=9222 --headless
-
-**Important note:** this is a complete rewrite that uses brand new JavaScript
-features and takes full advantage of the headless mode of Chrome; the upshot is
-that it requires Node.js version 7.6.0+ and can only work in headless mode. It
-also introduces breaking changes in the API. If these requirements are
-unfeasible stick with version [0.9.5] but consider that it will not be supported
-anymore.
-
-[0.9.5]: https://github.com/cyrus-and/chrome-har-capturer/releases/tag/v0.9.5
 
 ## Command line utility
 
