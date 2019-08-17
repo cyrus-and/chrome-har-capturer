@@ -11,7 +11,7 @@
         "headless"
     ],
     "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
-    "version": "0.13.5",
+    "version": "0.13.6",
     "repository": {
         "type": "git",
         "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
