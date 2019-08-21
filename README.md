@@ -40,6 +40,7 @@ URLs. The following options are available:
     -u, --timeout <ms>       time to wait before giving up with a URL
     -r, --retry <number>     number of retries on page load failure
     -e, --retry-delay <ms>   time to wait before starting a new attempt
+    -f, --abort-on-failure   stop after the first failure (incompatible with parallel mode)
     -d, --post-data <bytes>  maximum POST data size to be returned
     -l, --parallel <n>       load <n> URLs in parallel
 
@@ -71,7 +72,7 @@ the list of supported events).
 - `timeout`: milliseconds to wait before giving up with a URL;
 - `retry`: number of retries on page load failure. Defaults to `0`;
 - `retryDelay`: time to wait before starting a new attempt. Defaults to `0`;
-- `abortOnfailure`: stop after the first failure (incompatible with parallel mode);
+- `abortOnFailure`: stop after the first failure (incompatible with parallel mode);
 - `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
 - `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
   time-based metrics). Defaults to `false`;
