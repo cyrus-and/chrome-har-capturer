@@ -180,6 +180,7 @@ expected that represent the reply of the [`Network.getResponseBody`] method:
 
 - [HAR 1.2 Spec](http://www.softwareishard.com/blog/har-12-spec/)
 - [HAR Viewer](http://www.softwareishard.com/blog/har-viewer/)
+- [HAR Analyzer](https://toolbox.googleapps.com/apps/har_analyzer/)
 
 [Chrome Debugging Protocol]: https://developer.chrome.com/devtools/docs/debugger-protocol
 [chrome-remote-interface]: https://github.com/cyrus-and/chrome-remote-interface
