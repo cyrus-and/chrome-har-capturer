@@ -13,16 +13,19 @@ Under the hood this module uses [chrome-remote-interface] to instrument Chrome.
 
 Install this module from NPM:
 
-    npm install chrome-har-capturer
+```
+npm install chrome-har-capturer
+```
 
 Start Chrome like this:
 
-    google-chrome --remote-debugging-port=9222 --headless
+```
+google-chrome --remote-debugging-port=9222 --headless
+```
 
 ## Command line utility
 
-The command line utility can be used to generate HAR files from a list of
-URLs. The following options are available:
+The command line utility can be used to generate HAR files from a list of URLs. The following options are available:
 
     -h, --help               output usage information
     -t, --host <host>        Chrome Debugging Protocol host
@@ -46,9 +49,7 @@ URLs. The following options are available:
 
 ## Library
 
-Alternatively this module provides a simple [API](#api) that can be used to
-write custom applications. See the command line utility [source code] for a
-working example.
+Alternatively this module provides a simple [API](#api) that can be used to write custom applications. See the command line utility [source code][] for a working example.
 
 [source code]: https://github.com/cyrus-and/chrome-har-capturer/blob/master/bin/cli.js
 
@@ -56,15 +57,14 @@ working example.
 
 #### run(urls, [options])
 
-Start the loading of a batch of URLs. Returns an event emitter (see below for
-the list of supported events).
+Start the loading of a batch of URLs. Returns an event emitter (see below for the list of supported events).
 
 `urls` is array of URLs.
 
 `options` is an object with the following optional properties:
 
-- `host`: [Chrome Debugging Protocol] host. Defaults to `localhost`;
-- `port`: [Chrome Debugging Protocol] port. Defaults to `9222`;
+- `host`: [Chrome Debugging Protocol][] host. Defaults to `localhost`;
+- `port`: [Chrome Debugging Protocol][] port. Defaults to `9222`;
 - `width`: frame width in DIP. Defaults to a Chrome-defined value;
 - `height`: frame height in DIP. Defaults to a Chrome-defined value;
 - `content`: if `true` also capture the requests body. Defaults to `false`;
@@ -74,21 +74,19 @@ the list of supported events).
 - `retryDelay`: time to wait before starting a new attempt. Defaults to `0`;
 - `abortOnFailure`: stop after the first failure (incompatible with parallel mode);
 - `postData`: maximum POST data size (in bytes) to be returned. Defaults to unlimited;
-- `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil
-  time-based metrics). Defaults to `false`;
+- `parallel`: if `true` load the URLs in parallel (**warning:** this may spoil time-based metrics). Defaults to `false`;
 - `preHook`: function returning a Promise executed before each page load:
     - `url`: the current URL;
-    - `client`: [CDP client instance];
+    - `client`: [CDP client instance][];
     - `index`: index of `url` in `urls`;
     - `urls`: input URL array.
 - `postHook`: function returning a Promise executed after each page load event:
     - `url`: the current URL;
-    - `client`: [CDP client instance];
+    - `client`: [CDP client instance][];
     - `index`: index of `url` in `urls`;
     - `urls`: input URL array.
 
-    If this hook resolves to a value then it is included in the resulting HAR
-    object as the value of the `_user` key of the this URL's page object.
+    If this hook resolves to a value then it is included in the resulting HAR object as the value of the `_user` key of the this URL's page object.
 
 [CDP client instance]: https://github.com/cyrus-and/chrome-remote-interface#class-cdp
 
@@ -98,8 +96,7 @@ the list of supported events).
 function (url, index, urls) {}
 ```
 
-Emitted when Chrome is about to load `url`. `index` is the index of `url` in
-`urls`. `urls` is the array passed to `run()`.
+Emitted when Chrome is about to load `url`. `index` is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: 'done'
 
@@ -107,8 +104,7 @@ Emitted when Chrome is about to load `url`. `index` is the index of `url` in
 function (url, index, urls) {}
 ```
 
-Emitted when Chrome finished loading `url`. `index` is the index of `url` in
-`urls`. `urls` is the array passed to `run()`.
+Emitted when Chrome finished loading `url`. `index` is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: fail'
 
@@ -116,9 +112,7 @@ Emitted when Chrome finished loading `url`. `index` is the index of `url` in
 function (url, err, index, urls) {}
 ```
 
-Emitted when Chrome cannot load `url`. The `Error` object `err` contains the
-failure reason. Failed URLs will not appear in the resulting HAR object. `index`
-is the index of `url` in `urls`. `urls` is the array passed to `run()`.
+Emitted when Chrome cannot load `url`. The `Error` object `err` contains the failure reason. Failed URLs will not appear in the resulting HAR object. `index` is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 
 ##### Event: 'har'
 
@@ -126,14 +120,11 @@ is the index of `url` in `urls`. `urls` is the array passed to `run()`.
 function (har) {}
 ```
 
-Emitted when all the URLs have been processed. If all the URLs fails then a
-valid empty HAR object is returned. `har` is the resulting HAR object.
+Emitted when all the URLs have been processed. If all the URLs fails then a valid empty HAR object is returned. `har` is the resulting HAR object.
 
 #### fromLog(url, log, [options])
 
-Generate a single-page HAR from an array of raw events that comes from the
-[Chrome Debugging Protocol] (e.g., from [chrome-remote-interface]). Returns a
-Promise that fulfills to the generated HAR.
+Generate a single-page HAR from an array of raw events that comes from the [Chrome Debugging Protocol][] (e.g., from [chrome-remote-interface][]). Returns a Promise that fulfills to the generated HAR.
 
 `url` is the page URL;
 
@@ -160,8 +151,7 @@ Events to be provided are:
 `options` is an object with the following optional properties:
 - `content`: if `true` also expect the requests body. Defaults to `false`.
 
-When `content` is `true` synthetic events in the following form are also
-expected:
+When `content` is `true` synthetic events in the following form are also expected:
 
 ```js
 {
@@ -174,10 +164,7 @@ expected:
 }
 ```
 
-These events contain the reply of the [`Network.getResponseBody`] method, this
-is needed because Chrome does not return the body content via events, instead it
-must be requested manually and the reply must be appended to the other events in
-the log.
+These events contain the reply of the [`Network.getResponseBody`][] method, this is needed because Chrome does not return the body content via events, instead it must be requested manually and the reply must be appended to the other events in the log.
 
 [`Network.getResponseBody`]: https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-getResponseBody
 
