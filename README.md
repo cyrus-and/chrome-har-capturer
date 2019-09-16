@@ -161,7 +161,7 @@ Events to be provided are:
 - `content`: if `true` also expect the requests body. Defaults to `false`.
 
 When `content` is `true` synthetic events in the following form are also
-expected that represent the reply of the [`Network.getResponseBody`] method:
+expected:
 
 ```js
 {
@@ -173,6 +173,11 @@ expected that represent the reply of the [`Network.getResponseBody`] method:
     }
 }
 ```
+
+These events contain the reply of the [`Network.getResponseBody`] method, this
+is needed because Chrome does not return the body content via events, instead it
+must be requested manually and the reply must be appended to the other events in
+the log.
 
 [`Network.getResponseBody`]: https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-getResponseBody
 
