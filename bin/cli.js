@@ -31,6 +31,7 @@ program
     .option('-f, --abort-on-failure', 'stop after the first failure (incompatible with parallel mode)')
     .option('-d, --post-data <bytes>', 'maximum POST data size to be returned')
     .option('-l, --parallel <n>', 'load <n> URLs in parallel')
+    .option('--userMetric <js>', 'evaluate <js> after each page load and store the result in the HAR')
     .parse(process.argv);
 
 if (program.args.length === 0) {
@@ -89,14 +90,32 @@ async function preHook(url, client) {
     }
 }
 
-function postHook(url, client) {
-    return new Promise((fulfill, reject) => {
+function generatePostHook(userMetric) {
+    return async (url, client) => {
         // allow the user specified grace time
-        setTimeout(fulfill, program.grace || 0);
-    });
+        await new Promise((fulfill, reject) => {
+            setTimeout(fulfill, program.grace || 0);
+        });
+        // allow to add the output of user-provided code to the HAR
+        let user;
+        if (userMetric) {
+            const {result, exceptionDetails} = await client.Runtime.evaluate({
+                expression: userMetric,
+                returnByValue: true,
+                awaitPromise: true,
+            });
+            // return the result or the error message
+            if (exceptionDetails) {
+                user = exceptionDetails.exception.description;
+            } else {
+                user = result.value;
+            }
+        }
+        return user;
+    };
 }
 
-const {host, port, width, height, content, cache, timeout, retry, retryDelay, abortOnFailure, postData, parallel} = program;
+const {host, port, width, height, content, cache, timeout, retry, retryDelay, abortOnFailure, postData, parallel, userMetric} = program;
 CHC.run(program.args, {
     host, port,
     width, height,
@@ -107,7 +126,7 @@ CHC.run(program.args, {
     abortOnFailure,
     postData,
     parallel,
-    preHook, postHook
+    preHook, postHook: generatePostHook(userMetric)
 }).on('load', (url) => {
     log(`- ${prettify(url)} `);
     if (parallel) {
