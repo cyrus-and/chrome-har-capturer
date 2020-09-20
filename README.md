@@ -148,12 +148,13 @@ Events to be provided are:
 - `Network.loadingFinished`;
 - `Network.loadingFailed`.
 
-For WebSocket are:
- - `Network.webSocketWillSendHandshakeRequest`
- - `Network.webSocketHandshakeResponseReceived`
- - `Network.webSocketClosed`
- - `Network.webSocketFrameSent`
- - `Network.webSocketFrameReceived`
+Additional events for WebSockets are:
+
+ - `Network.webSocketWillSendHandshakeRequest`;
+ - `Network.webSocketHandshakeResponseReceived`;
+ - `Network.webSocketClosed`;
+ - `Network.webSocketFrameSent`;
+ - `Network.webSocketFrameReceived`.
 
 `options` is an object with the following optional properties:
 - `content`: if `true` also expect the requests body. Defaults to `false`.
