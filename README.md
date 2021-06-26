@@ -1,7 +1,7 @@
 # chrome-har-capturer [![Build Status][]][travis]
 
-[Build Status]: https://travis-ci.org/cyrus-and/chrome-har-capturer.svg?branch=master
-[travis]: https://travis-ci.org/cyrus-and/chrome-har-capturer
+[Build Status]: https://travis-ci.com/cyrus-and/chrome-har-capturer.svg?branch=master
+[travis]: https://travis-ci.com/cyrus-and/chrome-har-capturer
 
 Capture HAR files from a Chrome instance.
 
