@@ -33,7 +33,7 @@
     },
     "dependencies": {
         "chalk": "1.x.x",
-        "chrome-remote-interface": "^0.25.7",
+        "chrome-remote-interface": "^0.31.2",
         "commander": "2.x.x"
     },
     "devDependencies": {
