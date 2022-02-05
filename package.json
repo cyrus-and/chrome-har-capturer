@@ -37,9 +37,9 @@
         "commander": "2.x.x"
     },
     "devDependencies": {
-        "eslint": "5.x.x",
-        "mocha": "5.x.x",
+        "eslint": "^8.8.0",
         "har-validator": "5.x.x",
-        "http2": "3.x.x"
+        "http2": "3.x.x",
+        "mocha": "^9.2.0"
     }
 }
