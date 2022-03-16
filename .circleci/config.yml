@@ -10,7 +10,8 @@ allBranchesAndVTag: &allBranchesAndVTag
     only:
       - /.*/
   tags:
-    only: /^v.*/
+    only: 
+      - /^(v).*$/
     #e.i v1.0.11
 
 versionTag: &versionTag
@@ -18,7 +19,8 @@ versionTag: &versionTag
     ignore:
       - /.*/
   tags:
-    only: /^v.*/
+    only:
+      - /^(v).*$/
     #e.i v1.0.11
 jobs:
   test:
