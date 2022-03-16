@@ -22,7 +22,13 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py3-pip
+            python3 -m pip install \
+              awscli>=2.4.18
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
