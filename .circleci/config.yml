@@ -14,6 +14,9 @@ allBranchesAndVTag: &allBranchesAndVTag
     #e.i v1.0.11
 
 versionTag: &versionTag
+  branches:
+    ignore:
+      - /.*/
   tags:
     only: /^v.*/
     #e.i v1.0.11
