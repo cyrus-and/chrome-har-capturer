@@ -56,6 +56,13 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
+      - run:  
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install curl unzip
+            sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/opt/awscli.zip"
+            sudo unzip /opt/awscli.zip -d /opt
+            sudo /opt/aws/install
       - run:
           command: npm run co:login
       - run:
