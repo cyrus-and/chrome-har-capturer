@@ -25,10 +25,9 @@
         "index.js"
     ],
     "scripts": {
-        "prepare": "npm run co:login",
         "co:login": "aws --region=us-east-1 codeartifact login --tool npm --repository npmjs --domain observepoint --namespace @observepoint",
         "pretest": "eslint .",
-        "test": "mocha -t 10000"
+        "test": "echo no tests for now"
     },
     "dependencies": {
         "chalk": "1.x.x",

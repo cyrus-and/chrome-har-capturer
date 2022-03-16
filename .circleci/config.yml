@@ -57,7 +57,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-          command: ls
+          command: npm run co:login
       - run:
           name: Publish package
           command: npm publish
