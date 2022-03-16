@@ -25,10 +25,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache \
-              py3-pip
-            python3 -m pip install \
-              awscli>=2.4.18
+            sudo apt-get update && sudo apt-get install curl unzip
+            sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/opt/awscli.zip"
+            sudo unzip /opt/awscli.zip -d /opt
+            sudo /opt/aws/install
+
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
