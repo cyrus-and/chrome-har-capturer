@@ -67,6 +67,7 @@ workflows:
   node_package_ci_cd:
     jobs:
       - test:
+          context: Prod_Context_Observepoint
           filters: *allBranchesAndVTag
       - deploy:
           context: Prod_Context_Observepoint
