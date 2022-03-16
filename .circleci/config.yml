@@ -5,6 +5,14 @@ defaults: &defaults
   docker:
     - image: circleci/node:10
 
+allBranchesAndVTag: &allBranchesAndVTag
+  branches:
+    only:
+      - /.*/
+  tags:
+    only: /^v.*/
+    #e.i v1.0.11
+
 versionTag: &versionTag
   tags:
     only: /^v.*/
@@ -34,26 +42,27 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths: .
+      - run:
+          command: ls
   deploy:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/project
       - run:
+          command: ls
+      - run:
           name: Publish package
           command: npm publish
 
 workflows:
   version: 2
-  test-deploy:
+  node_package_ci_cd:
     jobs:
       - test:
-          filters:
-            branches:
-              only:
-                - hotfix
-                - feature
-                - bugfix
+          filters: *allBranchesAndVTag
       - deploy:
           context: Prod_Context_Observepoint
           filters: *versionTag
+          requires:
+            - test
