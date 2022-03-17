@@ -25,7 +25,7 @@
         "index.js"
     ],
     "scripts": {
-        "co:login": "aws --region=us-east-1 codeartifact login --tool npm --repository npmjs --domain observepoint --namespace @observepoint",
+        "co:login": "aws --region=us-west-2 codeartifact login --tool npm --repository npmjs --domain observepoint --namespace @observepoint",
         "pretest": "eslint . --fix",
         "test": "echo no tests for now"
     },
