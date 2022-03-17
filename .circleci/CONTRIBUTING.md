@@ -6,7 +6,7 @@
 The following branch prefixes are recommended : feature, bugfix or hotfix, however the test job in circleci workflow will trigger with any branch
 
 ### Start working
-1. Crete a new branch off of master
+1. Create a new branch off of master
 2. Implement your changes
 3. Update [CHANGELOG.md](./CHANGELOG.md)
 4. Update/increase the version in the package.json
