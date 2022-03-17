@@ -11,7 +11,7 @@
         "headless"
     ],
     "homepage": "https://github.com/observepoint/chrome-har-capturer",
-    "version": "0.13.101-pre-release",
+    "version": "0.13.101-beta",
     "repository": {
         "type": "git",
         "url": "git://github.com/observepoint/chrome-har-capturer"
