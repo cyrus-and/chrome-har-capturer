@@ -41,4 +41,6 @@ If you have already pushed a version, but want to update recent changes to the s
 
 ```git push --delete origin $version && git tag --delete $version ```
 
+### Maintaining upstream version updates
 
+Periodically check for newer versions in the [parent_repo](https://github.com/cyrus-and/chrome-har-capturer) and integrate those changes via PR to keep a history of changes on our forked repo.
