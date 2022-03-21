@@ -1,5 +1,5 @@
 {
-    "name": "chrome-har-capturer",
+    "name": "@observepoint/chrome-har-capturer",
     "author": "Andrea Cardaci <cyrus.and@gmail.com>",
     "license": "MIT",
     "description": "Capture HAR files from a headless Chrome instance",
@@ -10,14 +10,11 @@
         "protocol",
         "headless"
     ],
-    "homepage": "https://github.com/cyrus-and/chrome-har-capturer",
-    "version": "0.13.10",
+    "homepage": "https://github.com/observepoint/chrome-har-capturer",
+    "version": "0.13.101-beta",
     "repository": {
         "type": "git",
-        "url": "git://github.com/cyrus-and/chrome-har-capturer.git"
-    },
-    "bugs": {
-        "url": "http://github.com/cyrus-and/chrome-har-capturer/issues"
+        "url": "git://github.com/observepoint/chrome-har-capturer"
     },
     "bin": {
         "chrome-har-capturer": "./bin/cli.js"
@@ -28,8 +25,9 @@
         "index.js"
     ],
     "scripts": {
-        "pretest": "eslint .",
-        "test": "mocha -t 10000"
+        "co:login": "aws --region=us-west-2 codeartifact login --tool npm --repository npmjs --domain observepoint --namespace @observepoint",
+        "pretest": "eslint . --fix",
+        "test": "echo no tests for now"
     },
     "dependencies": {
         "chalk": "1.x.x",

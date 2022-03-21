@@ -1,0 +1,88 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: circleci/node:12
+
+allBranchesAndVTag: &allBranchesAndVTag
+  branches:
+    only:
+      - /.*/
+  tags:
+    only: 
+      - /^v.*/
+    #e.i v1.0.11
+
+versionTag: &versionTag
+  branches:
+    ignore:
+      - /.*/
+  tags:
+    only:
+      - /^v.*/
+    #e.i v1.0.11
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install curl unzip
+            sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/opt/awscli.zip"
+            sudo unzip /opt/awscli.zip -d /opt
+            sudo /opt/aws/install
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm install
+      - run:
+          name: Run tests
+          command: npm test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
+      - run:
+          command: ls
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:  
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install curl unzip
+            sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/opt/awscli.zip"
+            sudo unzip /opt/awscli.zip -d /opt
+            sudo /opt/aws/install
+      - run:
+          command: npm run co:login
+      - run:
+          name: Publish package
+          command: npm publish
+
+workflows:
+  version: 2
+  node_package_ci_cd:
+    jobs:
+      - test:
+          context: Prod_Context_Observepoint
+          filters: *allBranchesAndVTag
+      - deploy:
+          context: Prod_Context_Observepoint
+          filters: *versionTag
+          requires:
+            - test
