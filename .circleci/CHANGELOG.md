@@ -4,7 +4,7 @@
 
 ### Details
 
-The current implementation of this package only includes requests in the HAR that are marked as completed; "completed" is defined as having the Network.loadingFinished event. Some tags are not providing that event, thefore they are dropped when the HAR is being build.
+The current implementation of this package only includes requests in the HAR that are marked as completed; "completed" is defined as having the Network.loadingFinished event. Some tags are not providing that event, thefore they are dropped when the HAR is being built.
 
 This version allows for including network requests that finished and did not provide the mentioned event by marking them as finished when they received a response body with a status of 200. Instead of just dropping such requests, they are now added to the HAR. 
 
