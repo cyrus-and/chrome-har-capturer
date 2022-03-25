@@ -1,5 +1,18 @@
 # Changes
 
+## v0.13.102
+
+### Details
+This version includes network requests to the HAR file that have a valid response time instead of restricting requests with closed connection response header. As there are multiple header types, filtering by header type is not accurate [MDN_Header_Types] (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) 
+
+### Bug Fix
+* Network requests with 200 response code and connection keep-alive were being dropped from the har. This version addresses this issue.
+
+### Breaking Changes
+
+### Jira Issues
+[WORK-21369] (https://observepoint.atlassian.net/browse/WORK-21369)
+
 ## v0.13.101-beta
 
 ### Details
