@@ -1,5 +1,19 @@
 # Changes
 
+## v0.13.103
+
+### Details
+Various modifications to how timing is calculated.
+
+### Bug Fix
+* Changing page load/domLoad event handling to only accept the first events.  Other events are for other pages and inflate the timing incorrectly.
+* Introduced a custom event for tracking when a request was continued in order to decrease the overall time calculation for a page or tag load.
+
+### Breaking Changes
+
+### Jira Issues
+[WORK-23446] (https://observepoint.atlassian.net/browse/WORK-23446)
+
 ## v0.13.102
 
 ### Details
