@@ -1,5 +1,20 @@
 # Changes
 
+## v0.13.104
+
+### Details
+Adding support for appending headers from `Network.requestWillBeSentExtraInfo` to the request headers in the HAR.
+
+### Bug Fix
+* None
+
+### Breaking Changes
+* None
+
+### Jira Issues
+[WORK-24025] (https://observepoint.atlassian.net/browse/WORK-24025)
+
+
 ## v0.13.103
 
 ### Details

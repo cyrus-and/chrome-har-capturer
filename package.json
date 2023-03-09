@@ -11,7 +11,7 @@
         "headless"
     ],
     "homepage": "https://github.com/observepoint/chrome-har-capturer",
-    "version": "0.13.103",
+    "version": "0.13.104",
     "repository": {
         "type": "git",
         "url": "git://github.com/observepoint/chrome-har-capturer"
@@ -38,6 +38,6 @@
         "eslint": "^8.8.0",
         "har-validator": "5.x.x",
         "http2": "3.x.x",
-        "mocha": "^9.2.0"
+        "mocha": "^10.2.0"
     }
 }

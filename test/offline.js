@@ -78,4 +78,23 @@ describe('HAR (offline)', () => {
                 return validate.har(har) && validatePageTime(har, 300000);
             });
     });
+
+    it('Parse event log with Network.requestWillBeSentExtraInfo will append extra headers', async () => {
+        return CHC.fromLog('http://someurl', log, {
+            content: true
+        }).then((har) => {
+            const secGpc = har.log.entries[0].request.headers.some((header) => header.name === 'sec-gpc' && header.value === '1');
+            return validate.har(har) && secGpc;
+        });
+    });
+
+    it('Parse event log with Network.requestWillBeSentExtraInfo will overwrite original headers with new headers case-insensitive', async () => {
+        return CHC.fromLog('http://someurl', log, {
+            content: true
+        }).then((har) => {
+            const valueOverwritten = har.log.entries[0].request.headers.some((header) => header.name === 'User-Agent' && header.value === 'overwritePreexistingUserAgentWithDifferentCase');
+            const noDupe = har.log.entries[0].request.headers.some((header) => header.name === 'user-agent');
+            return validate.har(har) && valueOverwritten && noDupe;
+        });
+    });
 });

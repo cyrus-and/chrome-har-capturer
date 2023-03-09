@@ -32,6 +32,25 @@
         }
     },
     {
+        "method": "Network.requestWillBeSentExtraInfo",
+        "params": {
+            "requestId": "25326.1",
+            "associatedCookies": [],
+            "headers": {
+                "sec-gpc": "1",
+                "user-agent": "overwritePreexistingUserAgentWithDifferentCase"
+            },
+            "connectTiming": {
+                "requestTime": 19435.757861
+            },
+            "clientSecurityState": {
+                "initiatorIsSecureContext": true,
+                "initiatorIPAddressSpace": "Public",
+                "privateNetworkRequestPolicy": "Allow"
+            }
+        }
+    },
+    {
         "method": "Network.responseReceived",
         "params": {
             "requestId": "25326.1",
