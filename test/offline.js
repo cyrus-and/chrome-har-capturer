@@ -25,6 +25,18 @@ const validateEntryTime = (har, url, thresholdTimeMs) => {
     }
 };
 
+const allResultsTrue = (results) => {
+    // check if each result is true, if not, reject
+    return new Promise(function (resolve, reject) {
+        results.forEach(result => {
+            if (!result) {
+                reject({message: 'Not all params are true'});
+            }
+        });
+        resolve(results);
+    });
+};
+
 describe('HAR (offline)', () => {
     it('Parse event log without content', async () => {
         return CHC.fromLog('http://someurl', log).then((har) => {
@@ -84,7 +96,7 @@ describe('HAR (offline)', () => {
             content: true
         }).then((har) => {
             const secGpc = har.log.entries[0].request.headers.some((header) => header.name === 'sec-gpc' && header.value === '1');
-            return validate.har(har) && secGpc;
+            return Promise.all([validate.har(har), allResultsTrue([secGpc])]);
         });
     });
 
@@ -93,8 +105,8 @@ describe('HAR (offline)', () => {
             content: true
         }).then((har) => {
             const valueOverwritten = har.log.entries[0].request.headers.some((header) => header.name === 'User-Agent' && header.value === 'overwritePreexistingUserAgentWithDifferentCase');
-            const noDupe = har.log.entries[0].request.headers.some((header) => header.name === 'user-agent');
-            return validate.har(har) && valueOverwritten && noDupe;
+            const noDupe = !har.log.entries[0].request.headers.some((header) => header.name === 'user-agent');
+            return Promise.all([validate.har(har), allResultsTrue([valueOverwritten, noDupe])]);
         });
     });
 });
