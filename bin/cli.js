@@ -31,7 +31,7 @@ program
     .option('-f, --abort-on-failure', 'stop after the first failure (incompatible with parallel mode)')
     .option('-d, --post-data <bytes>', 'maximum POST data size to be returned')
     .option('-l, --parallel <n>', 'load <n> URLs in parallel')
-    .option('--userMetric <js>', 'evaluate <js> after each page load and store the result in the HAR')
+    .option('-j, --user-metric <js>', 'evaluate <js> after each page load and store the result in the HAR')
     .parse(process.argv);
 
 if (program.args.length === 0) {
