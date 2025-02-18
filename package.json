@@ -40,6 +40,6 @@
         "eslint": "^8.8.0",
         "har-validator": "5.x.x",
         "http2": "3.x.x",
-        "mocha": "^9.2.0"
+        "mocha": "^11.1.0"
     }
 }
